@@ -1,0 +1,38 @@
+<view class='page-container-classname'>
+  <view class="page">
+    <!-- <swiper class="swiper" indicator-dots="true" autoplay="true" interval="3000" duration="1000" onChange="swiperChange" 
+      a:if="{{movies.length>0}}">
+      <block a:for="{{movies}}" a:for-index="index">
+        <swiper-item>
+          <image src="{{item.href}}" class="slide-image" mode="widthFix" onTap="swipclick">
+          </image>
+        </swiper-item>
+      </block>
+    </swiper> -->
+    <!-- <view a:if="{{bannerPic==true}}">
+      <image src="../../images/bt_personalAppointment.png">
+      </image>
+    </view> -->
+    <view class="image_column">
+      <view data-type="0" onTap="bindOnsite">
+        <image src="../../images/bt_personalAppointment.png">
+        </image>
+      </view>
+      <!-- <view hidden data-type="1" onTap="bindOnsite">
+        <image src="../../images/bt_checkRegister.png">
+        </image>
+      </view> -->
+      <view onTap="bindAppointment">
+        <image src="../../images/appointmentRecord.png">
+        </image>
+      </view>
+    </view>
+    <view id="coupon_bottom" onTap="bindCoupon">
+      <image style="width:58rpx;height:49rpx" src="../../images/coupon.png">
+      </image>
+      <view id="coupon_text">
+        我的卡券
+      </view>
+    </view>
+  </view>
+</view>

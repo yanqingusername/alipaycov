@@ -1,0 +1,124 @@
+<view class='page page-container-classname'>
+  
+  <view class="search_border">
+    <view class="search">
+      <view class="search_left" onTap="chooseDistrict">
+        <text id="district_font">{{sampling_place}}
+        </text>
+        <image class="right_arrow" src="../../images/rightArrow.png">
+        </image>
+      </view>
+      <input id="search_checked" type="text" placeholder="请输入采样点名称" confirm-type="search" value="{{searchText}}" onInput="searchChangeHandle" />
+      <view class="weui-icon-clear" a:if="{{searchText}}" onTap="clearSearchHandle">
+        <icon type="clear" size="20">
+        </icon>
+      </view>
+    </view>
+  </view>
+  <view class="page {{overflowFlag==true?'active':''}}">
+    <view class="P1" style="margin-top:160rpx">
+      <block a:if="{{flag1}}" a:for="{{channelList}}">
+        <view class="P2 app_font" data-name="{{item.channel_name}}" data-distance="{{item.distance}}" data-id="{{item.channel_id}}" 
+          onTap="bindCheckSamplingPoint">
+          <view class="app_flex">
+            <view class="bold_font">
+              {{item.channel_name}}
+            </view>
+            <view class="bold_font_2" a:if="{{hiddenFlag==false}}">
+              {{item.distance}}
+            </view>
+          </view>
+          <view a:for="{{item.workingTimeArr}}" a:for-index="textIndex" a:for-item="timeItem">
+            <view class="P2_1 app_flex">
+              <view class="P2_1_1">
+                <text a:if="{{textIndex==0}}">营业时间
+                </text>
+              </view>
+              <view class="P2_1_2">
+                {{timeItem}}
+              </view>
+            </view>
+          </view>
+          <view class="P2_1 app_flex" style="margin-top:6rpx">
+            <view class="P2_1_1">
+            </view>
+            <view class="P2_1_2">
+              {{item.work_time_remarks}}
+            </view>
+          </view>
+          <view class="P2_1 app_flex">
+            <view class="P2_1_1" style="width:70%;color:#A3A3A3;margin-top:12rpx">
+              {{item.site_description}}
+            </view>
+            <view data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" data-site_description="{{item.site_description}}"
+              class="icon_view_1" catchTap="openMap">
+              <image class="icon_1" src="../../images/icon_positon_gray.png">
+              </image>
+            </view>
+            <view class="icon_view_2" data-phone="{{item.cstn}}" catchTap="phoneCall">
+              <image class="icon_2" src="../../images/icon_phone.png">
+              </image>
+            </view>
+          </view>
+        </view>
+      </block>
+      <block a:if="{{flag2}}" a:for="{{channelListPlus}}">
+        <view class="P2 app_font" data-name="{{item.channel_name}}" data-distance="{{item.distance}}" data-id="{{item.channel_id}}" 
+          onTap="bindCheckSamplingPoint">
+          <view class="app_flex">
+            <view class="bold_font">
+              {{item.channel_name}}
+            </view>
+            <view class="bold_font_2" a:if="{{hiddenFlag==false}}">
+              {{item.distance}}
+            </view>
+          </view>
+          <view a:for="{{item.workingTimeArr}}" a:for-index="textIndex" a:for-item="timeItem">
+            <view class="P2_1 app_flex">
+              <view class="P2_1_1">
+                <text a:if="{{textIndex==0}}">营业时间
+                </text>
+              </view>
+              <view class="P2_1_2">
+                {{timeItem}}
+              </view>
+            </view>
+          </view>
+          <view class="P2_1 app_flex" style="margin-top:6rpx">
+            <view class="P2_1_1">
+            </view>
+            <view class="P2_1_2">
+              {{item.work_time_remarks}}
+            </view>
+          </view>
+          <view class="P2_1 app_flex">
+            <view class="P2_1_1" style="width:70%;color:#A3A3A3;margin-top:12rpx">
+              {{item.site_description}}
+            </view>
+            <view data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" 
+              class="icon_view_1" catchTap="openMap">
+              <image class="icon_1" src="../../images/icon_positon_gray.png">
+              </image>
+            </view>
+            <view class="icon_view_2" data-phone="{{item.cstn}}" catchTap="phoneCall">
+              <image class="icon_2" src="../../images/icon_phone.png">
+              </image>
+            </view>
+          </view>
+        </view>
+      </block>
+      <view style="display:flex;justify-content:center">
+        <view>
+          <view class="app_noinfo_desc">
+            {{tip}}
+          </view>
+        </view>
+        <view a:if="{{alreadyChecked_temp==true}}">
+          <view class="app_noinfo_desc">
+            {{tip_temp}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,164 @@
+<view class='page-container-classname'>
+  
+  <view class="search_border">
+    <view class="search" style="position: relative;">
+      <input id="search_checked" type="text" placeholder="请输入受检者姓名" placeholder-class="ph_class" confirm-type="search" value="{{searchText}}" 
+        onInput="searchChangeHandle" />
+      <view class="weui-icon-clear" a:if="{{searchText}}" catchTap="clearSearchHandle">
+        <icon id="clear_1" type="clear" size="20" catchTap="clearSearchHandle">
+        </icon>
+      </view>
+    </view>
+  </view>
+  <view class="page {{overflowFlag==true?'active':''}}" style="position:absolute;">
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="3000" duration="1000" onChange="swiperChange" 
+      a:if="{{movies.length>0}}">
+      <block a:for="{{movies}}" a:for-index="index">
+        <swiper-item>
+          <image src="{{item.href}}" class="slide-image" mode="aspectFill" onTap="swipclick">
+          </image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="P1">
+      <block a:if="{{flag1}}" a:for="{{appointmentList}}">
+        <view class="P2 app_font" data-onlineflagnum="{{item.onlineFlag}}" data-num="{{item.appointment_num}}" data-type="{{item.type}}" 
+          onTap="toInfo">
+          <view class="app_flex">
+            <view class="bold_font">
+              {{item.create_time}}
+            </view>
+            <view class="bold_font_2" a:if="{{item.use_status!=4&&item.use_status!=5&&item.use_status!=7}}">
+              {{item.status}}
+            </view>
+            <view class="bold_font_2" style="color:#00A451" a:if="{{item.use_status==4}}">
+              {{item.status}}
+            </view>
+            <view class="bold_font_2" style="color:#B8321E" a:if="{{item.use_status==5}}">
+              {{item.status}}
+            </view>
+            <view class="bold_font_2" style="color:#444940" a:if="{{item.use_status==7}}">
+              {{item.status}}
+            </view>
+          </view>
+          <view class="hr">
+          </view>
+          <view class="P2_1 app_flex">
+            <view class="P2_1_1">
+              检测类型
+            </view>
+            <view class="P2_1_2">
+              {{item.test_type}}
+            </view>
+          </view>
+          <view class="P2_1 app_flex" a:if="{{item.name}}">
+            <view class="P2_1_1">
+              受检者姓名
+            </view>
+            <view class="P2_1_2">
+              {{item.name}}
+            </view>
+          </view>
+          <view class="P2_1 app_flex" a:if="{{item.phone}}">
+            <view class="P2_1_1">
+              手机号
+            </view>
+            <view class="P2_1_2">
+              {{item.phone}}
+            </view>
+          </view>
+          <view class="button_flex">
+            <button id="button_1" catchTap="bpa" a:if="{{item.sendbutn==1}}">
+              给亲友报平安
+            </button>
+            <!-- <button hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
+              开发票
+            </button> -->
+            <button data-appointmentnum="{{item.appointment_num}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
+              申请退款
+            </button>
+            <button data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}" style="margin:auto">
+              查询报告
+            </button>
+          </view>
+        </view>
+      </block>
+      <block a:if="{{flag2}}" a:for="{{appointmentListPlus}}">
+        <view class="P2 app_font" data-onlineflagnum="{{item.onlineFlag}}" data-num="{{item.appointment_num}}" data-type="{{item.type}}" 
+          onTap="toInfo">
+          <view class="app_flex">
+            <view class="bold_font">
+              {{item.create_time}}
+            </view>
+            <view class="bold_font_2" a:if="{{item.use_status!=4&&item.use_status!=5&&item.use_status!=7}}">
+              {{item.status}}
+            </view>
+            <view class="bold_font_2" style="color:#00A451" a:if="{{item.use_status==4}}">
+              {{item.status}}
+            </view>
+            <view class="bold_font_2" style="color:#B8321E" a:if="{{item.use_status==5}}">
+              {{item.status}}
+            </view>
+            <view class="bold_font_2" style="color:#444940" a:if="{{item.use_status==7}}">
+              {{item.status}}
+            </view>
+          </view>
+          <view class="hr">
+          </view>
+          <view class="P2_1 app_flex">
+            <view class="P2_1_1">
+              检测类型
+            </view>
+            <view class="P2_1_2">
+              {{item.test_type}}
+            </view>
+          </view>
+          <view class="P2_1 app_flex">
+            <view class="P2_1_1">
+              受检者姓名
+            </view>
+            <view class="P2_1_2">
+              {{item.name}}
+            </view>
+          </view>
+          <view class="P2_1 app_flex" a:if="{{item.phone}}">
+            <view class="P2_1_1">
+              手机号
+            </view>
+            <view class="P2_1_2">
+              {{item.phone}}
+            </view>
+          </view>
+          <view class="button_flex" data-report="{{item.pdf_url}}" data-appointmentnum="{{item.appointment_num}}">
+            <button id="button_1" catchTap="bpa" a:if="{{item.sendbutn==1}}">
+              给亲友报平安
+            </button>
+            <button hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
+              开发票
+            </button>
+            <button data-appointmentnum="{{item.appointment_num}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
+              申请退款
+            </button>
+            <button data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}">
+              查询报告
+            </button>
+          </view>
+        </view>
+      </block>
+      <text>\n</text>
+      <text>\n</text>
+      <text>\n</text>
+      <text>\n</text>
+      <view>
+        <view class="app_noinfo_desc">
+          {{tip}}
+        </view>
+      </view>
+      <view a:if="{{alreadyChecked_temp==true}}">
+        <view class="app_noinfo_desc">
+          {{tip_temp}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/index/article",
+    "pages/coupon/couponCheck",
+    "pages/coupon/coupon",
+    "pages/appointmentRecord/appointmentRecord",
+    "pages/appointmentRecord/appointmentDetail",
+    "pages/chooseSamplingPoint/chooseDistrict",
+    "pages/chooseSamplingPoint/chooseSamplingPoint",
+    "pages/onsiteAppointment/onsiteAppointment"
+  ],
+  "plugins": {
+    "subscribeMsg": {
+      "version": "*",
+      "provider": "2021001155639035"
+    }
+  },
+  "window": {
+    "defaultTitle": "卡尤迪核酸检测服务"
+  },
+  "style": "v2",
+  "permission": {
+    "scope.userLocation": { "desc": "你的位置信息将用于小程序定位" },
+    "sitemapLocation": "sitemap.json"
+  },
+  "sitemapLocation": "sitemap.json"
+}

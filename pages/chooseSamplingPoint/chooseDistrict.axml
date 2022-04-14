@@ -1,0 +1,14 @@
+<view class='page-container-classname'>
+  <view class="p1">
+    <view class="p1_1">
+      北京
+    </view>
+    <view class="p1_2">
+      <view class="district_arr" data-sp="{{item.sampling_place}}" a:for="{{arr}}" onTap="bindBackToChannel">
+        {{item.sampling_place}}　　　　　　　　　　{{item.num}}
+        <view class="hr">
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "modes": [
+    {
+      "title": "测试",
+      "page": "pages/index/index",
+      "query": "qrCode=https%3A%2F%2Fcloud.coyotebio-lab.com%3A8443%2Flis_appointment%2Fchannel_id%3D283"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "modal-view":"../../colorui/components/modalView/modalView",
+    "subscribe-msg": "plugin://subscribeMsg/subscribe-msg"
+
+  },
+  "disableScroll":false,
+  "defaultTitle": "个人预约"
+  
+}

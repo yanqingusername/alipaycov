@@ -1,0 +1,23 @@
+<view class='page-container-classname'>
+    <view class="modal-mask"  a:if="{{show}}" >
+        <view class="modal-content" >
+            <view class="main-content" >
+                <view class="main-title" >
+{{title}}
+                </view>
+                <scroll-view scroll-y="" >
+                    <slot>
+                    </slot>
+                </scroll-view>
+            </view>
+            <view class="modal-footer" >
+                <view class="cancel-btn"  a:if="{{!noCancel}}"  onTap="cancel" >
+{{cancelText}}
+                </view>
+                <view class="confirm-btn"  onTap="confirm" >
+{{confirmText}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
