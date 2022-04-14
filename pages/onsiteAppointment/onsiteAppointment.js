@@ -1083,7 +1083,7 @@ _Page({
       that.data.coupon_payment == "无"
     ) {
       var payment_amount = that.data.payment_amount;
-    } else if (that.data.coupon_payment == 34.99) {
+    } else if (that.data.coupon_payment == 24.89) {
       var payment_amount = 0.01;
     } else {
       var payment_amount = that.data.payment_amount - coupon_payment;

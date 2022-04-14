@@ -156,12 +156,14 @@
               <view class="title_bold">
                 检测类型
               </view>
-              <view class="title_right" hidden="{{sfgz_show==0?'hidden':''}}" onTap="showPriceModal">
-                查看收费规则详情
-              </view>
-              <view style="align-self:center">
-                <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
-                </image>
+              <view class="title_view">
+                <view class="title_right" style="margin-left: 0rpx;" hidden="{{sfgz_show==0?'hidden':''}}" onTap="showPriceModal">
+                  查看收费规则详情
+                </view>
+                <view style="align-self:center">
+                  <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
+                  </image>
+                </view>
               </view>
             </view>
             <view a:for="{{detectionTypeArr}}">
@@ -172,7 +174,7 @@
                   {{item.text}}
                 </view>
                 <view>
-                  ¥{{item.money}}.00
+                  ¥{{item.money}}
                 </view>
               </view>
             </view>
@@ -207,15 +209,17 @@
               <view class="title_bold" style="width:30%">
                 优惠券
               </view>
-              <view id="coupon_payment" a:if="{{coupon_payment!='不使用'&&coupon_payment!='无'}}">
-                -¥{{coupon_payment}}
-              </view>
-              <view id="coupon_payment" a:else>
-                {{coupon_payment}}
-              </view>
-              <view style="align-self:center">
-                <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
-                </image>
+              <view class="title_view">
+                <view id="coupon_payment" a:if="{{coupon_payment!='不使用'&&coupon_payment!='无'}}">
+                  -¥{{coupon_payment}}
+                </view>
+                <view id="coupon_payment" a:else>
+                  {{coupon_payment}}
+                </view>
+                <view style="align-self:center">
+                  <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
+                  </image>
+                </view>
               </view>
             </view>
           </view>
@@ -265,7 +269,7 @@
           </view>
         </view>
         <view class="div_policy">
-          <checkbox-group onChange="changePolicy">
+          <checkbox-group onChange="changePolicy" style="display: flex;align-items: center;">
             <checkbox class="round pink" checked="{{policyChecked}}" id="privacy_radio">
             </checkbox>
             <label for="privacy_radio" id="privacy_policy">
@@ -285,13 +289,13 @@
       </view>
       <view id="button_whole" class="flex margin-bottom text-center">
         <view id="button_left" class="basis-lg bg-grey  " a:if="{{choose_type==0&&(coupon_payment=='不使用'||coupon_payment=='无')}}">
-          应付 ¥{{payment_amount}}.00
+          应付 ¥{{payment_amount}}
         </view>
         <view id="button_left_coupon" class="basis-lg bg-grey  " a:if="{{choose_type==0&&coupon_payment!='不使用'&&coupon_payment!='无'}}">
-          <view id="coupon_font_top" a:if="{{coupon_payment!=34.99}}">
-            应付 ¥{{payment_amount-coupon_payment}}.00
+          <view id="coupon_font_top" a:if="{{coupon_payment!=24.89}}">
+            应付 ¥{{payment_amount-coupon_payment}}
           </view>
-          <view id="coupon_font_top" a:if="{{coupon_payment==34.99}}">
+          <view id="coupon_font_top" a:if="{{coupon_payment==24.89}}">
             应付 ¥0.01
           </view>
           <view id="coupon_font_bottom">

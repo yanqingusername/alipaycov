@@ -221,8 +221,15 @@ textarea{
 }
 .title_1{
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
+
+.title_view{
+  display: flex;
+  align-items: center;
+}
+
 .title_bold{
   font-weight: 500;
   margin: 20rpx 0 20rpx 20rpx;
@@ -429,6 +436,7 @@ checkbox{
 }
 #privacy_radio{
   /* bottom: 4rpx; */
+  top: 4rpx;
   left: 6rpx;
   transform: scale(0.7)
 }
@@ -439,7 +447,7 @@ checkbox{
 #coupon_payment{
   color: #DF6595;
   font-size: 26rpx;
-  margin: 24rpx 0 0 260rpx;
+  /* margin: 24rpx 0 0 260rpx; */
 }
 #coupon_font_top{
   font-size: 32rpx;
