@@ -1,0 +1,23 @@
+<import-sjs from="../../utils/substring.sjs" name="tools"></import-sjs>
+
+<view class="page">
+     <view class="subject_view" onTap="bindAddSubject">
+        <view class="subject_view_white"><image  class="icon_add" src="../../images/icon_add.png"/>添加受检人</view>
+      </view>
+
+      <block a:for="{{dataList}}" a:key="index">
+        <view class="subject_item" onTap="bindSelectSubject" data-item="{{item}}">
+          <view class="subject_view_bg">
+              <view style="width:90%">
+                <view class="subject_title">{{item.name ? item.name : '-'}}</view>
+                <view class="subject_text" style="margin-top:20rpx;">{{item.card_type == 1 ? '护照' : item.card_type == 2 ? '港澳台通行证' : '身份证'}} {{item.id_card ? tools.centerIdCardTrim(item.id_card) : '-'}}</view>
+                <view class="subject_text" style="margin-top:22rpx;">手机号 {{tools.centerPhoneTrim(item.phone)}}</view>
+              </view>
+              <view style="position:relative;" catchTap="bindEditSubject" data-online="{{item.onlineFlag}}" data-item="{{item}}">
+                <image class="right_arrow" src="../../images/icon_detail_edit_gray.png"></image>
+              </view>
+          </view>
+        </view>
+      </block>
+      <view style="height:50rpx;"></view>
+</view>

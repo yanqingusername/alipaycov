@@ -24,6 +24,7 @@ _Page({
    * 页面的初始数据
    */
   data: {
+    num: '0',
     bindBackFlag: false,
     // forbiddenFlag:false,//禁止进入选择采样点页面
     phoneCode: ["", ""],
@@ -51,7 +52,6 @@ _Page({
     address: "",
     locationName: "",
     choose_type: 0,
-    num: 1,
     name: "",
     phone: "",
     onlineid: 1,
@@ -71,7 +71,7 @@ _Page({
     cardIndex: 0,
     genderIndex: 0,
     gender: "男",
-    pay_channel: "美团",
+    pay_channel: "支付宝",
     codeBtText: "获取验证码",
     codeBtState: false,
     hiddenFlag: false,
@@ -107,7 +107,15 @@ _Page({
     objectMultiArray: [],
     multiIndex: [0, 0],
     appo_date: "",
-    appo_time: ""
+    appo_time: "",
+     // 新增
+    showNotice: false,
+    isAddSubject: 0,  // 0-默认添加受检人   1-选择受检人
+    card_name: '',
+    userinfo_id: '',
+    isAllSubject: 0, // 判断是否有受检人
+    bindBackSubject: false, // 判断是否点击添加受检人/选择受检人
+    isShowTime: false, // 是否在营业时间内
   },
   onLoad: function(options) {
     var that = this; // console.log(utils.checkAuditTime('09:00-12:00'));
@@ -133,11 +141,11 @@ _Page({
       console.log(options);
       console.log(options.fromContinueFlag);
     } else {
-      that.bindHistoryInfo();
+      // that.bindHistoryInfo();
     }
 
     that.setData({
-      choose_type: options.choose_type //0 微信 1 三方
+      choose_type: options.choose_type //0 支付宝 1 三方
     });
 
     if (options.fix_channel_id != undefined && options.fix_channel_id != -1) {
@@ -954,60 +962,64 @@ _Page({
     console.log(id_card);
     console.log(openid);
 
-    if (onlineFlag == false) {
-      //线下
-    } else {
-      //线上
-      if (cardIndex != 0) {
-        //其他身份证件
-        if (name == "") {
-          box.showToast("请填写与证件一致的姓名");
-          return;
-        }
+    // if (onlineFlag == false) {
+    //   //线下
+    // } else {
+    //   //线上
+    //   if (cardIndex != 0) {
+    //     //其他身份证件
+    //     if (name == "") {
+    //       box.showToast("请填写与证件一致的姓名");
+    //       return;
+    //     }
 
-        if (age == "") {
-          box.showToast("请填写年龄");
-          return;
-        } else if (id_card == "") {
-          box.showToast("请填写正确的证件号码");
-          return;
-        }
-      } else {
-        //线上 且选择身份证
-        if (name == "") {
-          box.showToast("请填写与证件一致的姓名");
-          return;
-        } else if (id_card == "") {
-          box.showToast("请填写正确的证件号码");
-          return;
-        }
+    //     if (age == "") {
+    //       box.showToast("请填写年龄");
+    //       return;
+    //     } else if (id_card == "") {
+    //       box.showToast("请填写正确的证件号码");
+    //       return;
+    //     }
+    //   } else {
+    //     //线上 且选择身份证
+    //     if (name == "") {
+    //       box.showToast("请填写与证件一致的姓名");
+    //       return;
+    //     } else if (id_card == "") {
+    //       box.showToast("请填写正确的证件号码");
+    //       return;
+    //     }
 
-        if (!utils.checkIdCard(id_card)) {
-          box.showToast("请填写正确的证件号码");
-          return;
-        }
-      }
-    }
+    //     if (!utils.checkIdCard(id_card)) {
+    //       box.showToast("请填写正确的证件号码");
+    //       return;
+    //     }
+    //   }
+    // }
 
-    if (phone == "") {
-      box.showToast("请输入手机号码");
-      return;
-    } else if (!utils.checkPhone(phone)) {
-      box.showToast("手机号码格式不正确");
-      return;
-    } else if (code == "") {
-      box.showToast("请填写验证码");
-      return;
-    } else if (phoneCode[0] == "") {
-      //进入这里说明未点击获取验证码
-      box.showToast("请获取验证码");
-      return;
-    } else if (phoneCode[0] != phone) {
-      box.showToast("验证码过期");
-      return;
-    } else if (phoneCode[1] != code) {
-      box.showToast("验证码错误");
-      return;
+    // if (phone == "") {
+    //   box.showToast("请输入手机号码");
+    //   return;
+    // } else if (!utils.checkPhone(phone)) {
+    //   box.showToast("手机号码格式不正确");
+    //   return;
+    // } else if (code == "") {
+    //   box.showToast("请填写验证码");
+    //   return;
+    // } else if (phoneCode[0] == "") {
+    //   //进入这里说明未点击获取验证码
+    //   box.showToast("请获取验证码");
+    //   return;
+    // } else if (phoneCode[0] != phone) {
+    //   box.showToast("验证码过期");
+    //   return;
+    // } else if (phoneCode[1] != code) {
+    //   box.showToast("验证码错误");
+    //   return;
+    // }
+    if (that.data.userinfo_id == '') {
+      box.showToast("添加受检人");
+      return
     } else if (
       detectionTypeArr.length == 1 &&
       detectionTypeArr[0].grayFlag == true
@@ -1054,7 +1066,9 @@ _Page({
       console.log("急检");
       that.bindshowModal_3(); //此时已经完成所有校验
     } else {
-      that.submit();
+      // that.submit();
+      //  新增检测是否在营业时间接口判断
+      that.getCheckTime();
     }
   }, 3000),
   // 提交确认出库信息
@@ -1157,20 +1171,24 @@ _Page({
 
     var data1 = {
       open_id: openid,
-      name: that.data.name,
-      gender: that.data.gender,
-      age: that.data.age,
-      card_type: that.data.cardIndex,
-      id_card: that.data.idcard,
-      phone: phone,
+      // name: that.data.name,
+      // gender: that.data.gender,
+      // age: that.data.age,
+      // card_type: that.data.cardIndex,
+      // id_card: that.data.idcard,
+      // phone: phone,
       test_type: typeid,
       payment_amount: payment_amount,
       channel: channel_id,
-      onlineFlag: that.data.onlineFlagNum,
+      // onlineFlag: that.data.onlineFlagNum,
       coupon_id: coupon_id,
       appointment_date: appointment_date,
-      pname: "卡尤迪核酸检测"
+      pname: "卡尤迪核酸检测",
+      id: that.data.userinfo_id,
+      // pay_channel: that.data.pay_channel //支付渠道
     };
+
+    console.log('--data1-->:',data1)
 
     if (choose_type == 0) {
       //TODO
@@ -1247,18 +1265,63 @@ _Page({
     } else if (choose_type == 1) {
       var data2 = {
         open_id: openid,
-        name: name,
-        gender: that.data.gender,
-        age: that.data.age,
-        card_type: that.data.card_type,
-        id_card: that.data.idcard,
-        phone: phone,
-        test_type: typeid,
-        payment_amount: payment_amount,
+        examined_person_id: that.data.userinfo_id,
         channel: channel_id,
+        appointment_time: appointment_date,
         verification_code: verification_code,
-        onlineFlag: that.data.onlineFlagNum
+        // pay_channel: that.data.pay_channel //支付渠道
       };
+      request.request_get('/alipay/addMeituanPaymentOrder.hn', data2, function (res) {
+        console.info('回调', res)
+        if (res) {
+          if (res.success) {
+            console.log(res)
+            that.setData({
+              appointment_num: res.msg,
+            })
+            let templateList = [
+              "932e319891ea499e961a0ec773b4a98f",
+              "8b63944e35f342b8bc206081fe46dbda",
+              "73035c012b7a4c1da4d29900aa43e1dc"
+            ];
+            my.requestSubscribeMessage({
+              entityIds: templateList,
+              success: res => {
+                // res.behavior == 'subscribe'
+                console.log("接口调用成功的回调", res);
+                let data = {
+                  openid: app.globalData.openid
+                };
+                request.request_get("/alipay/sendmsg.hn", data, function(res) {
+                        console.info("回调", res);
+                });
+              },
+              fail: res => {
+                console.log("接口调用失败的回调", res);
+              },
+              complete: res => {
+                console.log("接口调用结束的回调", res);
+                _my.navigateTo({
+                        url:
+                          "/pages/appointmentRecord/appointmentDetail?appointment_num=" +
+                          that.data.appointment_num +
+                          "&continueFlag=true" +
+                          "&onlineFlagNum=" +
+                          that.data.onlineFlagNum +
+                          "&dynamicTimeFlag=" +
+                          that.data.dynamicTimeFlag
+                      });
+              }   
+            });
+          } else {
+            console.log(res.msg);
+            box.showToast(res.msg);
+          }
+          // box.hideLoading();
+        } else {
+          box.showToast("网络不稳定，请重试");
+        }
+      })
       // request.request_get("/a/addMeituanPaymentOrder.hn", data2, function(res) {
       //   console.info("支付回调", res);
 
@@ -1310,12 +1373,14 @@ _Page({
     _my.hideLoading({
       success: res => {}
     });
-  }, 300),
+  }, 2000),
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    this.getAllSubject();
+
     var that = this;
     console.log("onshow方法");
     // var pages = getCurrentPages();
@@ -1331,6 +1396,24 @@ _Page({
       coupon_payment: that.data.coupon_payment,
       coupon_id: that.data.coupon_id
     });
+
+    if (that.data.bindBackSubject == true) {
+      this.setData({
+        bindBackSubject: false,
+        isAddSubject: that.data.isAddSubject,
+        userinfo_id: that.data.userinfo_id,
+        name: that.data.name,
+        gender: that.data.gender,
+        age: that.data.age,
+        cardIndex: that.data.cardIndex,
+        idcard: that.data.idcard,
+        phone: that.data.phone,
+        card_name: that.data.card_name,
+        onlineFlag: that.data.onlineFlag,
+        onlineFlagNum: that.data.onlineFlagNum,
+
+      });
+    }
 
     if (that.data.bindBackFlag == true) {
       that.getFixedChannel(that.data.channel.channel_id); // 选中新采样点返回
@@ -1501,13 +1584,23 @@ _Page({
     if (that.data.num == 1) {
       //美团
       that.setData({
-        pay_channel: "美团"
+        pay_channel: "美团",
+        verification_code: '',
+        choose_type: 1
       });
     } else if (that.data.num == 2) {
       //京东
       that.setData({
-        pay_channel: "京东"
+        pay_channel: "京东",
+        verification_code: '',
+        choose_type: 2
       });
+    } else if(that.data.num == 0){ //支付宝
+      that.setData({
+        pay_channel: '支付宝',
+        verification_code: '',
+        choose_type: 0
+      })
     }
   },
   changeTestType: function(e) {
@@ -2025,7 +2118,10 @@ _Page({
         yyts_title: msg.yyts_title,
         yyts_text: msg.yyts_text,
         fwxy_url: msg.fwxy_url,
-        yszz_url: msg.yszz_url
+        yszz_url: msg.yszz_url,
+        is_promise: msg.is_promise || 2, //是否显示公告 1-显示
+        promise_title: msg.promise_title,
+        promise_url: msg.promise_url
       });
     });
   },
@@ -2094,5 +2190,106 @@ _Page({
         }
       }
     });
-  }
+  },
+  /**
+   * 公告
+   */
+  bindNoticeClick(){
+    var that = this;
+    that.setData({
+      showNotice: true
+    });
+  },
+  noticeConfirm(){
+    var that = this;
+    that.setData({
+      showNotice: false
+    });
+  },
+  /**
+   * 添加受检人
+   */
+  bindAddSubject(){
+    if(this.data.isAllSubject == 1){
+      _my.navigateTo({
+        url: '/pages/selectSubject/index'
+      });
+    }else{
+      _my.navigateTo({
+        url:'/pages/addSubject/index?isAddSub=0'
+      });
+    }
+  },
+  bindSelectSubject(){
+    _my.navigateTo({
+      url: '/pages/selectSubject/index'
+    });
+  },
+  clearVerificationCode(){
+    var that = this;
+    that.setData({
+      verification_code: ''
+    })
+  },
+  getAllSubject(){
+    let that = this;
+    var openid = app.globalData.openid;
+    let data = {
+      open_id: openid
+    }
+    request.request_get('/a/getAllSubject.hn', data, function (res) {
+      console.info('回调', res)
+      if (res) {
+        if (res.success) {
+          if(res && res.msg && res.msg.length > 0){
+            that.setData({
+              isAllSubject: 1
+            })
+          }else {
+            that.setData({
+              isAllSubject: 0,
+              isAddSubject: 0
+            })
+          }
+        } else {
+          box.showToast(res.msg);
+        }
+      } else {
+        box.showToast("网络不稳定，请重试");
+      }
+    })
+  },
+  /**
+   * 下单须知
+   */
+  submitConfirm: utils.throttle(function () {
+    var that = this
+    that.setData({
+      isShowTime: false
+    })
+    that.submit()
+  }, 2000),
+  getCheckTime(){
+    let that = this;
+    let data = {
+      test_type: that.data.typeid
+    }
+    request.request_get('/a/is_during_business_hours.hn', data, function (res) {
+      console.info('回调', res)
+      if (res) {
+          if (res.during_business_hours){
+            that.submit();
+          } else {
+            that.setData({
+              isShowTime: true,
+              timeTitle: res.title,
+              timeTips: res.Tips,
+              timeBusinessTime: res.business_time
+            })
+          }
+      } else {
+        box.showToast("网络不稳定，请重试");
+      }
+    })
+  },
 });

@@ -74,12 +74,13 @@
             <!-- <button hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
               开发票
             </button> -->
-            <button data-appointmentnum="{{item.appointment_num}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
+            <button data-appointmentnum="{{item.appointment_num}}" data-paytype="{{item.pay_type}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
               申请退款
             </button>
             <button data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}" style="margin:auto">
               查询报告
             </button>
+            <button id="button_2" a:if="{{item.use_status==1}}">查看信息码</button>
           </view>
         </view>
       </block>
@@ -136,12 +137,13 @@
             <button hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
               开发票
             </button>
-            <button data-appointmentnum="{{item.appointment_num}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
+            <button data-appointmentnum="{{item.appointment_num}}" data-paytype="{{item.pay_type}}"  id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
               申请退款
             </button>
             <button data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}">
               查询报告
             </button>
+            <button id="button_2" a:if="{{item.use_status==1}}">查看信息码</button>
           </view>
         </view>
       </block>
