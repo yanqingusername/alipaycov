@@ -129,7 +129,7 @@ _Page({
               });
             } else if (info.payment_type == 5) {
               that.setData({
-                payment_way: "核销码（美团）"
+                payment_way: "美团"
               });
             } else if (info.payment_type == 2) {
               that.setData({
@@ -138,6 +138,10 @@ _Page({
             } else if (info.payment_type == 3) {
               that.setData({
                 payment_way: "支付宝支付"
+              });
+            } else if (info.payment_type == 6) {
+              that.setData({
+                payment_way: "京东"
               });
             }
 
