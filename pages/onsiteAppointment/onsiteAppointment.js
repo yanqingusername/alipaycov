@@ -1018,7 +1018,7 @@ _Page({
     //   return;
     // }
     if (that.data.userinfo_id == '') {
-      box.showToast("添加受检人");
+      box.showToast("请添加受检人");
       return
     } else if (
       detectionTypeArr.length == 1 &&
@@ -1050,6 +1050,13 @@ _Page({
         return;
       }
     }*/
+
+    if(this.data.choose_type ==1 || this.data.choose_type ==2){
+      if (this.data.verification_code == '') {
+        box.showToast("请输入核销码");
+        return
+      }
+    }
 
     console.log("payment_amount=" + that.data.payment_amount);
 
@@ -1275,6 +1282,8 @@ _Page({
         console.info('回调', res)
         if (res) {
           if (res.success) {
+            box.showToast("核销成功”，且跳转至预约详情页",'',1000);
+
             console.log(res)
             that.setData({
               appointment_num: res.msg,
@@ -2121,7 +2130,8 @@ _Page({
         yszz_url: msg.yszz_url,
         is_promise: msg.is_promise || 2, //是否显示公告 1-显示
         promise_title: msg.promise_title,
-        promise_url: msg.promise_url
+        promise_url: msg.promise_url,
+        promise_announcement: msg.promise_announcement
       });
     });
   },

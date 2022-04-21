@@ -134,10 +134,11 @@ page{
   justify-content: center;
 }
 .gray_radius_item{
-  margin-left:150rpx;
+  /* margin-left:150rpx;
   position:relative;
   top:4rpx;
-  right:20rpx
+  right:20rpx */
+  margin-right: 10rpx;
 }
 .gray_radius_img{
   width:36rpx;

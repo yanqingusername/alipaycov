@@ -21,7 +21,7 @@
       <view class="notice_view" onTap="bindNoticeClick" a:if="{{is_promise == 1}}">
         <view class="notice_left">
           <image class="notice_left_img" src="../../images/icon_notice_slices.png"></image>
-          <view class="notice_left_title">卡尤迪绝不向用户收取任何形式“加急费”</view>
+          <view class="notice_left_title">{{promise_announcement}}</view>
         </view>
         <image class="right_arrow" src="../../images/rightArrow.png"></image>
       </view>
@@ -258,7 +258,7 @@
               </view>
             </view>
           </view>
-          <!-- <view class="medWhite">
+          <view class="medWhite">
             <view class="title_1">
               <view class="title_bold" style="width:30%">
                 支付方式
@@ -271,10 +271,10 @@
                 支付宝支付
               </view>
             </view>
-          </view> -->
+          </view>
         </view>
 
-        <view>
+        <!-- <view>
         <view class="medWhite">
           <view class="title_1">
             <view class="title_bold">支付方式</view>
@@ -306,7 +306,7 @@
           <view a:if="{{num==1 || num==2}}" style="height: 1px;width: 620rpx;background: #DDDDDD;margin: 0rpx 28rpx;"></view>
           <view style="height:30rpx"></view>
         </view>
-      </view>
+      </view> -->
 
         <!-- <view>
           <view class="medWhite" a:if="{{choose_type==1}}">
@@ -531,7 +531,7 @@
   </modal-view>
 
   <!-- 是否营业时间弹框 -->
-  <modal-view show="{{isShowTime}}" noCancel="{{true}}" title="{{timeTitle}}" bindcancel="modalCancel" bindconfirm='submitConfirm' confirmText='好的，我知道了' cancelText='自定义取消'>
+  <modal-view show="{{isShowTime}}" noCancel="{{true}}" title="{{timeTitle}}" onConfirm='submitConfirm' confirmText='好的，我知道了' cancelText='自定义取消'>
     <view class='modal-content'>
       <scroll-view scroll-y class='main-content' id="main-content-1">
         <view class="modal_font1">{{timeTips}}</view>

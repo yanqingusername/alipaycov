@@ -24,20 +24,20 @@
       <block a:if="{{flag1}}" a:for="{{appointmentList}}">
         <view class="P2 app_font" data-onlineflagnum="{{item.onlineFlag}}" data-num="{{item.appointment_num}}" data-type="{{item.type}}" 
           onTap="toInfo">
-          <view class="app_flex">
-            <view class="bold_font">
+          <view class="app_flex_new">
+            <view class="bold_font_new">
               {{item.create_time}}
             </view>
-            <view class="bold_font_2" a:if="{{item.use_status!=4&&item.use_status!=5&&item.use_status!=7}}">
+            <view class="bold_font_2_new" a:if="{{item.use_status!=4&&item.use_status!=5&&item.use_status!=7}}">
               {{item.status}}
             </view>
-            <view class="bold_font_2" style="color:#00A451" a:if="{{item.use_status==4}}">
+            <view class="bold_font_2_new" style="color:#00A451" a:if="{{item.use_status==4}}">
               {{item.status}}
             </view>
-            <view class="bold_font_2" style="color:#B8321E" a:if="{{item.use_status==5}}">
+            <view class="bold_font_2_new" style="color:#B8321E" a:if="{{item.use_status==5}}">
               {{item.status}}
             </view>
-            <view class="bold_font_2" style="color:#444940" a:if="{{item.use_status==7}}">
+            <view class="bold_font_2_new" style="color:#444940" a:if="{{item.use_status==7}}">
               {{item.status}}
             </view>
           </view>
@@ -67,40 +67,40 @@
               {{item.phone}}
             </view>
           </view>
-          <view class="button_flex">
-            <button id="button_1" catchTap="bpa" a:if="{{item.sendbutn==1}}">
+          <view class="button_flex_new">
+            <view id="button_1" catchTap="bpa" a:if="{{item.sendbutn==1}}">
               给亲友报平安
-            </button>
+            </view>
             <!-- <button hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
               开发票
             </button> -->
-            <button data-appointmentnum="{{item.appointment_num}}" data-paytype="{{item.pay_type}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
+            <view data-appointmentnum="{{item.appointment_num}}" data-paytype="{{item.pay_type}}" id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
               申请退款
-            </button>
-            <button data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}" style="margin:auto">
+            </view>
+            <view data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}" style="margin:auto">
               查询报告
-            </button>
-            <button id="button_2" a:if="{{item.use_status==1}}">查看信息码</button>
+            </view>
+            <view id="button_2" a:if="{{item.use_status==1}}">查看信息码</view>
           </view>
         </view>
       </block>
       <block a:if="{{flag2}}" a:for="{{appointmentListPlus}}">
         <view class="P2 app_font" data-onlineflagnum="{{item.onlineFlag}}" data-num="{{item.appointment_num}}" data-type="{{item.type}}" 
           onTap="toInfo">
-          <view class="app_flex">
-            <view class="bold_font">
+          <view class="app_flex_new">
+            <view class="bold_font_new">
               {{item.create_time}}
             </view>
-            <view class="bold_font_2" a:if="{{item.use_status!=4&&item.use_status!=5&&item.use_status!=7}}">
+            <view class="bold_font_2_new" a:if="{{item.use_status!=4&&item.use_status!=5&&item.use_status!=7}}">
               {{item.status}}
             </view>
-            <view class="bold_font_2" style="color:#00A451" a:if="{{item.use_status==4}}">
+            <view class="bold_font_2_new" style="color:#00A451" a:if="{{item.use_status==4}}">
               {{item.status}}
             </view>
-            <view class="bold_font_2" style="color:#B8321E" a:if="{{item.use_status==5}}">
+            <view class="bold_font_2_new" style="color:#B8321E" a:if="{{item.use_status==5}}">
               {{item.status}}
             </view>
-            <view class="bold_font_2" style="color:#444940" a:if="{{item.use_status==7}}">
+            <view class="bold_font_2_new" style="color:#444940" a:if="{{item.use_status==7}}">
               {{item.status}}
             </view>
           </view>
@@ -130,20 +130,20 @@
               {{item.phone}}
             </view>
           </view>
-          <view class="button_flex" data-report="{{item.pdf_url}}" data-appointmentnum="{{item.appointment_num}}">
-            <button id="button_1" catchTap="bpa" a:if="{{item.sendbutn==1}}">
+          <view class="button_flex_new" data-report="{{item.pdf_url}}" data-appointmentnum="{{item.appointment_num}}">
+            <view id="button_1" catchTap="bpa" a:if="{{item.sendbutn==1}}">
               给亲友报平安
-            </button>
-            <button hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
+            </view>
+            <view hidden="" id="button_1" catchTap="bindInvoice" a:if="{{item.use_status==4}}">
               开发票
-            </button>
-            <button data-appointmentnum="{{item.appointment_num}}" data-paytype="{{item.pay_type}}"  id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
+            </view>
+            <view data-appointmentnum="{{item.appointment_num}}" data-paytype="{{item.pay_type}}"  id="button_1" catchTap="bindRefund" a:if="{{item.use_status==1&&item.refundTimeFlag!=false}}">
               申请退款
-            </button>
-            <button data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}">
+            </view>
+            <view data-report="{{item.pdf_url}}" id="button_2" catchTap="bindDownloadReport" a:if="{{item.use_status==4}}">
               查询报告
-            </button>
-            <button id="button_2" a:if="{{item.use_status==1}}">查看信息码</button>
+            </view>
+            <view id="button_2" a:if="{{item.use_status==1}}">查看信息码</view>
           </view>
         </view>
       </block>
