@@ -150,7 +150,7 @@ textarea{
 .medWhite{
   background-color: #fff;
   height: auto;
-  z-index: 999;
+  z-index: 12;
   position: relative;
   top: -27%;
   width: 90%;
@@ -163,7 +163,7 @@ textarea{
 .medWhite.active{
   background-color: #fff;
   height: auto;
-  z-index: 999;
+  z-index: 12;
   position: relative;
   top: -27%;
   width: 90%;
@@ -581,7 +581,7 @@ color: #999999;
 .fixed_view{
   position: fixed;
     bottom: 0rpx;
-    z-index: 1001;
+    z-index: 13;
     display: flex;
     align-items: center;
     justify-content: center;

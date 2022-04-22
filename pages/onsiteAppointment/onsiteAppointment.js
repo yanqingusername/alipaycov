@@ -2150,8 +2150,13 @@ _Page({
       for (let i = 0; i < time.length; i++) {
         const singletime = time[i];
         let child2 = new Object();
-        child2.name = singletime.time_section;
-        //child2.can_use = singletime.can_use;
+        // child2.name = singletime.time_section;
+        // child2.can_use = singletime.can_use;
+        let timeTitle = '';
+        if(singletime.can_use == 0){
+          timeTitle = '(已约满)';
+        }
+        child2.name = singletime.time_section+""+timeTitle;
         childlist.push(child2);
       }
       child.subList = childlist;
@@ -2170,6 +2175,11 @@ _Page({
         }
         let date = res.result[0].name;
         let time = res.result[1].name;
+        if(time){
+          if(time.indexOf('(')>=0){
+            time = time.substring(0,11);
+          }
+        }
         console.log(date);
         console.log(time);
         for (let j = 0; j < or_data.length; j++) {
