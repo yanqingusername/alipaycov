@@ -108,6 +108,7 @@ _Page({
     multiIndex: [0, 0],
     appo_date: "",
     appo_time: "",
+    new_payment_amount: 0,
      // 新增
     showNotice: false,
     isAddSubject: 0,  // 0-默认添加受检人   1-选择受检人
@@ -116,6 +117,7 @@ _Page({
     isAllSubject: 0, // 判断是否有受检人
     bindBackSubject: false, // 判断是否点击添加受检人/选择受检人
     isShowTime: false, // 是否在营业时间内
+    can_use_new: 1
   },
   onLoad: function(options) {
     var that = this; // console.log(utils.checkAuditTime('09:00-12:00'));
@@ -295,6 +297,20 @@ _Page({
             payment_working_time: detectionTypeArr[0].working_time
           });
           console.log(detectionTypeArr);
+
+          if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
+            that.setData({
+              new_payment_amount: that.data.payment_amount
+            })
+          } else {
+            let intPaymentAmount = that.data.payment_amount * 100;
+            let intCouponPayment = that.data.coupon_payment * 100;
+            let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+            that.setData({
+              new_payment_amount: payment_amount
+            })
+          }
+          
         } else {
           // box.showToast(res.msg);
         }
@@ -412,7 +428,11 @@ _Page({
                 appo_time:
                   that.data.objectMultiArray[that.data.multiIndex[0]].time[
                     that.data.multiIndex[1]
-                  ].time_section
+                  ].time_section,
+                can_use_new:
+                  that.data.objectMultiArray[that.data.multiIndex[0]].time[
+                    that.data.multiIndex[1]
+                  ].can_use,
               });
             } else {
               box.showToast(res.msg);
@@ -516,7 +536,11 @@ _Page({
                 appo_time:
                   that.data.objectMultiArray[that.data.multiIndex[0]].time[
                     that.data.multiIndex[1]
-                  ].time_section
+                  ].time_section,
+                can_use_new:
+                  that.data.objectMultiArray[that.data.multiIndex[0]].time[
+                    that.data.multiIndex[1]
+                  ].can_use,
               });
             } else {
               box.showToast(res.msg);
@@ -626,7 +650,8 @@ _Page({
               that.getbaseData(channel);
               that.setData({
                 appo_date:that.data.objectMultiArray[that.data.multiIndex[0]].date,
-                appo_time:that.data.objectMultiArray[that.data.multiIndex[0]].time[that.data.multiIndex[1]].time_section
+                appo_time:that.data.objectMultiArray[that.data.multiIndex[0]].time[that.data.multiIndex[1]].time_section,
+                can_use_new:that.data.objectMultiArray[that.data.multiIndex[0]].time[that.data.multiIndex[1]].can_use,
               });
             } else {
               // box.showToast(res.msg);
@@ -722,7 +747,11 @@ _Page({
                 appo_time:
                   that.data.objectMultiArray[that.data.multiIndex[0]].time[
                     that.data.multiIndex[1]
-                  ].time_section
+                  ].time_section,
+                can_use_new:
+                  that.data.objectMultiArray[that.data.multiIndex[0]].time[
+                    that.data.multiIndex[1]
+                  ].can_use
               });
             } else {
               // box.showToast(res.msg);
@@ -1029,12 +1058,13 @@ _Page({
     } else if (that.data.policyChecked == false) {
       box.showToast("请阅读并勾选协议");
       return;
-    } /*else if (that.data.channel.appointment_open == 1) {
-      if (
-        that.data.objectMultiArray[that.data.multiIndex[0]].time[
-          that.data.multiIndex[1]
-        ].can_use == 0
-      ) {
+    } else if (that.data.channel.appointment_open == 1) {
+      // if (
+      //   that.data.objectMultiArray[that.data.multiIndex[0]].time[
+      //     that.data.multiIndex[1]
+      //   ].can_use == 0
+      // ) 
+      if (that.data.can_use_new == 0) {
         _my.showModal({
           title: that.data.yyts_title,
           content: that.data.yyts_text,
@@ -1049,7 +1079,7 @@ _Page({
 
         return;
       }
-    }*/
+    }
 
     if(this.data.choose_type ==1 || this.data.choose_type ==2){
       if (this.data.verification_code == '') {
@@ -1099,15 +1129,26 @@ _Page({
     console.log(that.data.payment_amount);
     console.log(coupon_payment);
 
-    if (
-      that.data.coupon_payment == "不使用" ||
-      that.data.coupon_payment == "无"
-    ) {
-      var payment_amount = that.data.payment_amount;
-    } else if (that.data.coupon_payment == 24.89) {
-      var payment_amount = 0.01;
+    // if (
+    //   that.data.coupon_payment == "不使用" ||
+    //   that.data.coupon_payment == "无"
+    // ) {
+    //   var payment_amount = that.data.payment_amount;
+    // } else if (that.data.coupon_payment == 24.89) {
+    //   var payment_amount = 0.01;
+    // } else {
+    //   var payment_amount = that.data.payment_amount - coupon_payment;
+    // }
+
+    if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
+      var payment_amount = that.data.payment_amount
     } else {
-      var payment_amount = that.data.payment_amount - coupon_payment;
+      let intPaymentAmount = that.data.payment_amount * 100
+      let intCouponPayment = coupon_payment * 100;
+      var payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+      // this.setData({
+      //   payment_amount: payment_amount
+      // })
     }
 
     var coupon_id = that.data.coupon_id;
@@ -1401,6 +1442,20 @@ _Page({
     console.log(that.data.coupon_payment);
     console.log("bindBackFlag=" + that.data.bindBackFlag);
 
+
+    if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
+      that.setData({
+        new_payment_amount: that.data.payment_amount
+      })
+    } else {
+      let intPaymentAmount = that.data.payment_amount * 100
+      let intCouponPayment = that.data.coupon_payment * 100;
+      let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+      that.setData({
+        new_payment_amount: payment_amount
+      })
+    }
+
     that.setData({
       coupon_payment: that.data.coupon_payment,
       coupon_id: that.data.coupon_id
@@ -1642,6 +1697,19 @@ _Page({
       payment_working_time: e.currentTarget.dataset.workingtime,
       coupon_payment: coupon_payment
     });
+    if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
+      that.setData({
+        new_payment_amount: that.data.payment_amount
+      })
+    } else {
+      let intPaymentAmount = that.data.payment_amount * 100
+      let intCouponPayment = that.data.coupon_payment * 100;
+      let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+      that.setData({
+        new_payment_amount: payment_amount
+      })
+    }
+
   },
 
   //显示地图
@@ -2190,6 +2258,10 @@ _Page({
               const time2 = time1[z];
               if (time2.time_section == time) {
                 const can_use = time2.can_use;
+
+                that.setData({
+                  can_use_new: can_use
+                });
 
                 if (can_use == 0) {
                   box.showToast(that.data.yyts_title);

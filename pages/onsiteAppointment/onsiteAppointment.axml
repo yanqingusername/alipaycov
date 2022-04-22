@@ -218,10 +218,10 @@
           </view>
           <view class="medWhite" hidden="{{channel.appointment_open=='0'?'hidden':''}}">
             <view class="title_1">
-              <view class="title_bold" style="width:30%">
+              <view class="title_bold">
                 预约时间
               </view>
-              <view style="width: 70%;display: inline-flex;justify-content: flex-end;">
+              <view style="display: inline-flex;justify-content: flex-end;">
                 <!-- <picker  class="title_right" style="width: unset;margin-left:unset;color: #555555;font-size: 28rpx;" 
                   value="{{multiIndex}}" range="{{MultiArray}}" onChange="bindMultiPickerChange" onColumnchange="bindMultiPickerColumnChange">
                   <view class="picker" style="margin:auto">
@@ -362,15 +362,16 @@
       <view class="fixed_view">
         <view id="button_whole" class="flex margin-bottom text-center">
           <view id="button_left" class="basis-lg bg-grey  " a:if="{{choose_type==0&&(coupon_payment=='不使用'||coupon_payment=='无')}}">
-            应付 ¥{{payment_amount}}
+            应付 ¥{{new_payment_amount}}
           </view>
           <view id="button_left_coupon" class="basis-lg bg-grey  " a:if="{{choose_type==0&&coupon_payment!='不使用'&&coupon_payment!='无'}}">
-            <view id="coupon_font_top" a:if="{{coupon_payment!=24.89}}">
+            <view id="coupon_font_top">应付 ¥{{new_payment_amount}}</view>
+            <!-- <view id="coupon_font_top" a:if="{{coupon_payment!=24.89}}">
               应付 ¥{{payment_amount-coupon_payment}}
             </view>
             <view id="coupon_font_top" a:if="{{coupon_payment==24.89}}">
               应付 ¥0.01
-            </view>
+            </view> -->
             <view id="coupon_font_bottom">
               已优惠¥{{coupon_payment}}
             </view>
