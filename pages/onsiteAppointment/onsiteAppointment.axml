@@ -338,7 +338,7 @@
             </view>
           </view>
         </view> -->
-        <view class="div_policy">
+        <!-- <view class="div_policy">
           <checkbox-group onChange="changePolicy" style="display: flex;align-items: center;">
             <checkbox class="round pink" checked="{{policyChecked}}" id="privacy_radio">
             </checkbox>
@@ -352,6 +352,17 @@
               </text>
               和
               <text class="underline_gray" catchTap="bindPrivacyPolicy">隐私政策
+              </text>
+            </label>
+          </checkbox-group>
+        </view> -->
+        <view class="div_policy" a:if="{{yyxz_show==1}}">
+          <checkbox-group onChange="changePolicy" style="display: flex;align-items: center;">
+            <checkbox class="round pink" checked="{{policyChecked}}" id="privacy_radio">
+            </checkbox>
+            <label for="privacy_radio" id="privacy_policy">
+              已阅读并同意
+              <text class="underline_gray" catchTap="bindYYXZ">预约须知
               </text>
             </label>
           </checkbox-group>
