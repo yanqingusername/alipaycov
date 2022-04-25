@@ -36,7 +36,7 @@ _Page({
     keyboard_type_limit_num: 18,
     showDialog: false,
     dialogData: {
-      title: "确认解绑该受检人？",
+      title: "确认删除该受检人？",
       titles:  "删除后无法恢复",
       cancel: "取消",
       sure: "确认"
@@ -77,6 +77,18 @@ _Page({
           cardIndex: jsonItem.card_type,
           userinfo_id: jsonItem.id
         });
+
+        if (jsonItem.card_type == 0) {
+          this.setData({
+            keyboard_type: 'idcard',
+            keyboard_type_limit_num: 18
+          })
+        } else {
+          this.setData({
+            keyboard_type: 'text',
+            keyboard_type_limit_num: 20
+          })
+        }
       }else {
         // 线上
         let jsonItem = JSON.parse(options.jsonItem);
@@ -108,6 +120,18 @@ _Page({
               genderIndex: 1
             });
           }
+        }
+
+        if (jsonItem.card_type == 0) {
+          this.setData({
+            keyboard_type: 'idcard',
+            keyboard_type_limit_num: 18
+          })
+        } else {
+          this.setData({
+            keyboard_type: 'text',
+            keyboard_type_limit_num: 20
+          })
         }
       }
     }
@@ -379,24 +403,28 @@ _Page({
         console.info('回调', res)
         if (res) {
           if (res.success) {
-            let pages = getCurrentPages();
-            let prevPage = pages[pages.length - 2];
-            prevPage.data.bindBackSubject = true;
-            prevPage.data.isAddSubject = 1;
-            prevPage.data.userinfo_id = res.person_id;
-            prevPage.data.gender = that.data.gender;
-            prevPage.data.age = that.data.age;
-            prevPage.data.cardIndex = that.data.cardIndex;
-            prevPage.data.name = name;
-            prevPage.data.phone = phone;
-            prevPage.data.idcard = id_card;
-            prevPage.data.card_name = that.data.card_name;
-            prevPage.data.onlineFlag = that.data.onlineFlag;
-            prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
+            box.showToast('添加成功','',1000)
 
-            _my.navigateBack({
-              delta: 1, 
-            })
+            setTimeout(()=>{
+              let pages = getCurrentPages();
+              let prevPage = pages[pages.length - 2];
+              prevPage.data.bindBackSubject = true;
+              prevPage.data.isAddSubject = 1;
+              prevPage.data.userinfo_id = res.person_id;
+              prevPage.data.gender = that.data.gender;
+              prevPage.data.age = that.data.age;
+              prevPage.data.cardIndex = that.data.cardIndex;
+              prevPage.data.name = name;
+              prevPage.data.phone = phone;
+              prevPage.data.idcard = id_card;
+              prevPage.data.card_name = that.data.card_name;
+              prevPage.data.onlineFlag = that.data.onlineFlag;
+              prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
+
+              _my.navigateBack({
+                delta: 1, 
+              })
+            },1200);
           } else {
             box.showToast(res.msg);
           }
@@ -410,24 +438,28 @@ _Page({
         console.info('回调', res)
         if (res) {
           if (res.success) {
-            let pages = getCurrentPages(); 
-            let prevPage = pages[pages.length - 3];
-            prevPage.data.bindBackSubject = true;
-            prevPage.data.isAddSubject = 1;
-            prevPage.data.userinfo_id = res.person_id;
-            prevPage.data.gender = that.data.gender;
-            prevPage.data.age = that.data.age;
-            prevPage.data.cardIndex = that.data.cardIndex;
-            prevPage.data.name = name;
-            prevPage.data.phone = phone;
-            prevPage.data.idcard = id_card;
-            prevPage.data.card_name = that.data.card_name;
-            prevPage.data.onlineFlag = that.data.onlineFlag;
-            prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
+            box.showToast('添加成功','',1000)
 
-            _my.navigateBack({
-              delta: 2, 
-            })
+            setTimeout(()=>{
+              let pages = getCurrentPages(); 
+              let prevPage = pages[pages.length - 3];
+              prevPage.data.bindBackSubject = true;
+              prevPage.data.isAddSubject = 1;
+              prevPage.data.userinfo_id = res.person_id;
+              prevPage.data.gender = that.data.gender;
+              prevPage.data.age = that.data.age;
+              prevPage.data.cardIndex = that.data.cardIndex;
+              prevPage.data.name = name;
+              prevPage.data.phone = phone;
+              prevPage.data.idcard = id_card;
+              prevPage.data.card_name = that.data.card_name;
+              prevPage.data.onlineFlag = that.data.onlineFlag;
+              prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
+
+              _my.navigateBack({
+                delta: 2, 
+              })
+            },1200);
           } else {
             box.showToast(res.msg);
           }
@@ -442,24 +474,28 @@ _Page({
         console.info('回调', res)
         if (res) {
           if (res.success) {
-            let pages = getCurrentPages(); 
-            let prevPage = pages[pages.length - 3];
-            prevPage.data.bindBackSubject = true;
-            prevPage.data.isAddSubject = 1;
-            prevPage.data.userinfo_id = that.data.userinfo_id;
-            prevPage.data.gender = that.data.gender;
-            prevPage.data.age = that.data.age;
-            prevPage.data.cardIndex = that.data.cardIndex;
-            prevPage.data.name = name;
-            prevPage.data.phone = phone;
-            prevPage.data.idcard = id_card;
-            prevPage.data.card_name = that.data.card_name;
-            prevPage.data.onlineFlag = that.data.onlineFlag;
-            prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
+            box.showToast('编辑成功','',1000)
 
-            _my.navigateBack({
-              delta: 2, 
-            })
+            setTimeout(()=>{
+              let pages = getCurrentPages(); 
+              let prevPage = pages[pages.length - 3];
+              prevPage.data.bindBackSubject = true;
+              prevPage.data.isAddSubject = 1;
+              prevPage.data.userinfo_id = that.data.userinfo_id;
+              prevPage.data.gender = that.data.gender;
+              prevPage.data.age = that.data.age;
+              prevPage.data.cardIndex = that.data.cardIndex;
+              prevPage.data.name = name;
+              prevPage.data.phone = phone;
+              prevPage.data.idcard = id_card;
+              prevPage.data.card_name = that.data.card_name;
+              prevPage.data.onlineFlag = that.data.onlineFlag;
+              prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
+
+              _my.navigateBack({
+                delta: 2, 
+              })
+            },1200);
           } else {
             box.showToast(res.msg);
           }

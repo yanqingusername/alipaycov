@@ -306,6 +306,11 @@ _Page({
             let intPaymentAmount = that.data.payment_amount * 100;
             let intCouponPayment = that.data.coupon_payment * 100;
             let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+            if(payment_amount > 0){
+
+            }else{
+              payment_amount = 0.01;
+            }
             that.setData({
               new_payment_amount: payment_amount
             })
@@ -1146,6 +1151,11 @@ _Page({
       let intPaymentAmount = that.data.payment_amount * 100
       let intCouponPayment = coupon_payment * 100;
       var payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+      if(payment_amount > 0){
+
+      }else{
+        payment_amount = 0.01;
+      }
       // this.setData({
       //   payment_amount: payment_amount
       // })
@@ -1451,6 +1461,11 @@ _Page({
       let intPaymentAmount = that.data.payment_amount * 100
       let intCouponPayment = that.data.coupon_payment * 100;
       let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+      if(payment_amount > 0){
+
+      }else{
+        payment_amount = 0.01;
+      }
       that.setData({
         new_payment_amount: payment_amount
       })
@@ -1705,6 +1720,11 @@ _Page({
       let intPaymentAmount = that.data.payment_amount * 100
       let intCouponPayment = that.data.coupon_payment * 100;
       let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
+      if(payment_amount > 0){
+
+      }else{
+        payment_amount = 0.01;
+      }
       that.setData({
         new_payment_amount: payment_amount
       })
