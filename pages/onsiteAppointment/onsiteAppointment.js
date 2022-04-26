@@ -117,7 +117,10 @@ _Page({
     isAllSubject: 0, // 判断是否有受检人
     bindBackSubject: false, // 判断是否点击添加受检人/选择受检人
     isShowTime: false, // 是否在营业时间内
-    can_use_new: 1
+    can_use_new: 1,
+    isXSH: 0, // 0 不显示  1 显示
+    isShowXSH: false,
+    isShowCanUse: false
   },
   onLoad: function(options) {
     var that = this; // console.log(utils.checkAuditTime('09:00-12:00'));
@@ -423,7 +426,8 @@ _Page({
                 work_time_remarks: info.work_time_remarks,
                 MultiArray: info.MultiArray,
                 objectMultiArray: info.objectMultiArray,
-                multiIndex: [0, 0]
+                multiIndex: [0, 0],
+                isXSH: info.isXSH
               });
               that.getDetectionType();
               that.getbaseData(channel);
@@ -530,7 +534,8 @@ _Page({
                 work_time_remarks: info.work_time_remarks,
                 MultiArray: info.MultiArray,
                 objectMultiArray: info.objectMultiArray,
-                multiIndex: [0, 0]
+                multiIndex: [0, 0],
+                isXSH: info.isXSH
               });
 
               that.getDetectionType();
@@ -646,7 +651,8 @@ _Page({
                 work_time_remarks: channel.work_time_remarks,
                 MultiArray: channel.MultiArray,
                 objectMultiArray: channel.objectMultiArray,
-                multiIndex: [0, 0]
+                multiIndex: [0, 0],
+                isXSH: channel.isXSH
               });
 
               console.log('1111111111111111111111111111111111111')
@@ -741,7 +747,8 @@ _Page({
                 work_time_remarks: channel.work_time_remarks,
                 MultiArray: channel.MultiArray,
                 objectMultiArray: channel.objectMultiArray,
-                multiIndex: [0, 0]
+                multiIndex: [0, 0],
+                isXSH: channel.isXSH
               });
 
               that.getDetectionType();
@@ -1065,23 +1072,28 @@ _Page({
         box.showToast("请阅读并勾选预约须知")
         return
       }
-    } else if (that.data.channel.appointment_open == 1) {
+    } 
+    
+    if (that.data.channel.appointment_open == 1) {
       // if (
       //   that.data.objectMultiArray[that.data.multiIndex[0]].time[
       //     that.data.multiIndex[1]
       //   ].can_use == 0
       // ) 
       if (that.data.can_use_new == 0) {
-        _my.showModal({
-          title: that.data.yyts_title,
-          content: that.data.yyts_text,
-          showCancel: false,
+        // _my.showModal({
+        //   title: that.data.yyts_title,
+        //   content: that.data.yyts_text,
+        //   showCancel: false,
 
-          success(res) {
-            if (res.confirm) {
-              console.log("用户点击了确定");
-            }
-          }
+        //   success(res) {
+        //     if (res.confirm) {
+        //       console.log("用户点击了确定");
+        //     }
+        //   }
+        // });
+        that.setData({
+          isShowCanUse: true
         });
 
         return;
@@ -1093,6 +1105,19 @@ _Page({
         box.showToast("请输入核销码");
         return
       }
+    }
+
+    /**
+     * appointment_open  是否开启预约  1 开启  0 未开启
+     * isXSH 0 不显示   1 显示
+     * 根据只开一天预约并且只能预约当天的时间,时间过期了提示
+     */
+    if(this.data.channel.appointment_open == '1' && this.data.isXSH == 0){
+      // box.showToast("当前时间为非营业时间，无法预约，为避免影响您的行程，请预约其他采样站",'',2000);
+      this.setData({
+        isShowXSH: true
+      });
+      return
     }
 
     console.log("payment_amount=" + that.data.payment_amount);
@@ -2133,16 +2158,19 @@ _Page({
         .can_use == 0
     ) {
       //提醒当前时间段不可预约
-      _my.showModal({
-        title: this.data.yyts_title,
-        content: this.data.yyts_text,
-        showCancel: false,
+      // _my.showModal({
+      //   title: this.data.yyts_title,
+      //   content: this.data.yyts_text,
+      //   showCancel: false,
 
-        success(res) {
-          if (res.confirm) {
-            console.log("用户点击了确定");
-          }
-        }
+      //   success(res) {
+      //     if (res.confirm) {
+      //       console.log("用户点击了确定");
+      //     }
+      //   }
+      // });
+      this.setData({
+        isShowCanUse: true
       });
 
       return;
@@ -2417,5 +2445,15 @@ _Page({
         box.showToast("网络不稳定，请重试");
       }
     })
+  },
+  submitConfirmXSH(){
+    this.setData({
+      isShowXSH: false
+    });
+  },
+  submitConfirmCanUse(){
+    this.setData({
+      isShowCanUse: false
+    });
   },
 });

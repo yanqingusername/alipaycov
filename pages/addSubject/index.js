@@ -355,7 +355,7 @@ _Page({
       box.showToast("请获取验证码")
       return
     } else if (phoneCode[0] != phone) {
-      box.showToast("验证码过期")
+      box.showToast("手机号和验证码不匹配")
       return
     } else if (phoneCode[1] != code) {
       box.showToast("验证码错误")
@@ -422,9 +422,9 @@ _Page({
               prevPage.data.gender = that.data.gender;
               prevPage.data.age = that.data.age;
               prevPage.data.cardIndex = that.data.cardIndex;
-              prevPage.data.name = name;
-              prevPage.data.phone = phone;
-              prevPage.data.idcard = id_card;
+              prevPage.data.name = that.data.name;
+              prevPage.data.phone = that.data.phone;
+              prevPage.data.idcard = that.data.idcard;
               prevPage.data.card_name = that.data.card_name;
               prevPage.data.onlineFlag = that.data.onlineFlag;
               prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
@@ -457,9 +457,9 @@ _Page({
               prevPage.data.gender = that.data.gender;
               prevPage.data.age = that.data.age;
               prevPage.data.cardIndex = that.data.cardIndex;
-              prevPage.data.name = name;
-              prevPage.data.phone = phone;
-              prevPage.data.idcard = id_card;
+              prevPage.data.name = that.data.name;
+              prevPage.data.phone = that.data.phone;
+              prevPage.data.idcard = that.data.idcard;
               prevPage.data.card_name = that.data.card_name;
               prevPage.data.onlineFlag = that.data.onlineFlag;
               prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
@@ -493,9 +493,9 @@ _Page({
               prevPage.data.gender = that.data.gender;
               prevPage.data.age = that.data.age;
               prevPage.data.cardIndex = that.data.cardIndex;
-              prevPage.data.name = name;
-              prevPage.data.phone = phone;
-              prevPage.data.idcard = id_card;
+              prevPage.data.name = that.data.name;
+              prevPage.data.phone = that.data.phone;
+              prevPage.data.idcard = that.data.idcard;
               prevPage.data.card_name = that.data.card_name;
               prevPage.data.onlineFlag = that.data.onlineFlag;
               prevPage.data.onlineFlagNum = that.data.onlineFlagNum;
@@ -613,14 +613,14 @@ _Page({
       }
       that.setData({
         onlineFlag: false,
-        gender: '男',
-        age: '',
-        cardIndex: 0,
-        name: '',
-        phone: '',
-        idcard: '',
-        card_name: '身份证',
-        onlineFlagNum: 1,
+        // gender: '男',
+        // age: '',
+        // cardIndex: 0,
+        // name: '',
+        // phone: '',
+        // idcard: '',
+        // card_name: '身份证',
+        // onlineFlagNum: 1,
       })
     }
   },
