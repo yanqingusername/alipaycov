@@ -127,9 +127,9 @@ _Page({
               that.setData({
                 payment_way: "线上支付（公众号）"
               });
-            } else if (info.payment_type == 5) {
+            } else if (info.payment_type == 1) {
               that.setData({
-                payment_way: "美团"
+                payment_way: "核销码（美团）"
               });
             } else if (info.payment_type == 2) {
               that.setData({
@@ -138,10 +138,6 @@ _Page({
             } else if (info.payment_type == 3) {
               that.setData({
                 payment_way: "支付宝支付"
-              });
-            } else if (info.payment_type == 6) {
-              that.setData({
-                payment_way: "京东"
               });
             }
 
@@ -181,9 +177,7 @@ _Page({
               latitude: info.latitude,
               longitude: info.longitude,
               yysj1: info.yysj1,
-              yysj2: info.yysj2,
-              verification_code: info.verification_code,
-              payment_type: info.payment_type
+              yysj2: info.yysj2
             });
             console.log("creator_id" + that.data.creator_id);
             console.log(

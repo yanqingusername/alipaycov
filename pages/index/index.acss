@@ -53,16 +53,3 @@ image {
   height: 100%;
   width: 100%;
 }
-
-.view_item{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40rpx 0rpx 20rpx 0rpx;
-}
-
-.view_img{
-  width: 726rpx;
-  height: 236rpx;
-  margin: 0rpx;
-}

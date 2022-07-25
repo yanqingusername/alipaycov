@@ -1,6 +1,6 @@
 <view class='page-container-classname'>
     <view class="modal-mask"  a:if="{{show}}" >
-        <view class="modal-content" a:if="{{types == 0}}">
+        <view class="modal-content" >
             <view class="main-content" >
                 <view class="main-title" >
 {{title}}
@@ -19,15 +19,5 @@
                 </view>
             </view>
         </view>
-    
-    <view class="concent" a:if="{{types == 1}}">
-      <view class="title">{{datas.title}} </view>
-      <view class="explain">{{datas.titles}}</view>
-      <view class="details">
-        <view class="cancel" onTap="dialogCancel">{{datas.cancel||"取消"}}</view>
-        <view class="sure" onTap="dialogSure">{{datas.sure||"确认"}}</view>
-      </view>
-    </view>
-
     </view>
 </view>

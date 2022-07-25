@@ -1,5 +1,3 @@
-<import-sjs from="../../utils/substring.sjs" name="tools"></import-sjs>
-
 <view class='page-container-classname'>
   
   <view class="page" a:if="{{showModal_2==false}}">
@@ -16,16 +14,6 @@
       <view>
         <view style="height:2rpx;background-color:#F5F5F5">
         </view>
-
-        <!-- 公告 -->
-      <view class="notice_view" onTap="bindNoticeClick" a:if="{{is_promise == 1}}">
-        <view class="notice_left">
-          <image class="notice_left_img" src="../../images/icon_notice_slices.png"></image>
-          <view class="notice_left_title">{{promise_announcement}}</view>
-        </view>
-        <image class="right_arrow" src="../../images/rightArrow.png"></image>
-      </view>
-
         <view class="medWhite" onTap="chooseChannel">
           <view class="sampleSite">
             <view style="position:relative;">
@@ -50,7 +38,6 @@
               <view class="font_2">
                 {{work_time_remarks}}
               </view>
-              <view style="height:10rpx;"></view>
             </view>
             <view style="position:relative;">
               <image class="right_arrow" src="../../images/rightArrow.png">
@@ -58,28 +45,7 @@
             </view>
           </view>
         </view>
-
-      <!-- 添加受检人 -->
-      <view class="subject_view" onTap="bindAddSubject" a:if="{{isAddSubject == 0}}">
-        <view class="subject_view_red"></view>
-        <view class="subject_view_white"><image  class="icon_add" src="../../images/icon_add.png"/>添加受检人</view>
-      </view>
-
-      <view class="subject_view" onTap="bindSelectSubject" a:if="{{isAddSubject == 1}}">
-        <!-- <view class="subject_view_red" style="height: 230rpx;"></view> -->
-        <view class="subject_view_bg">
-            <view style="width:90%">
-              <view class="subject_title">{{name ? name : '-'}}</view>
-              <view class="subject_text" style="margin-top:20rpx;">{{card_name}} {{idcard?idcard:'-'}}</view>
-              <view class="subject_text" style="margin-top:22rpx;">手机号 {{phone}}</view>
-            </view>
-            <view style="position:relative;">
-              <image class="right_arrow" src="../../images/rightArrow.png"></image>
-            </view>
-        </view>
-      </view>
-      
-        <!-- <view id="module_1" class="P5 app_flex">
+        <view id="module_1" class="P5 app_flex">
           <view id="module_2{{onlineid==1?'active':''}}" data-onlineid="1" class="P5_1 app_font" onTap="changeOnlineFlag">
             线上绑定身份
           </view>
@@ -183,45 +149,42 @@
               </image>
             </view>
           </view>
-        </view> -->
-
-        <view>
+        </view>
+        <view a:if="{{choose_type==0}}">
           <view class="medWhite">
             <view class="title_1">
               <view class="title_bold">
                 检测类型
               </view>
-              <view class="title_view">
-                <view class="title_right" style="margin-left: 0rpx;" hidden="{{sfgz_show==0?'hidden':''}}" onTap="showPriceModal">
-                  查看收费规则详情
-                </view>
-                <view style="align-self:center">
-                  <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
-                  </image>
-                </view>
+              <view class="title_right" hidden="{{sfgz_show==0?'hidden':''}}" onTap="showPriceModal">
+                查看收费规则详情
+              </view>
+              <view style="align-self:center">
+                <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
+                </image>
               </view>
             </view>
             <view a:for="{{detectionTypeArr}}">
-              <view style="{{item.grayFlag==true?'color:#D3D3D3':'black'}}" class="gray_radius {{(typeid==item.id && detectionTypeArr.length > 1)?'active':''}}" 
+              <view style="{{item.grayFlag==true?'color:#D3D3D3':'black'}}" class="gray_radius {{typeid==item.id?'active':''}}" 
                 data-urgent="{{item.urgent}}" data-money="{{item.money}}" data-text="{{item.text}}" data-id="{{item.id}}" 
                 data-workingtime="{{item.working_time}}" onTap="changeTestType">
                 <view>
                   {{item.text}}
                 </view>
                 <view>
-                  ¥{{item.money}}
+                  ¥{{item.money}}.00
                 </view>
               </view>
             </view>
             <view style="height:10rpx">
             </view>
           </view>
-          <view class="medWhite" hidden="{{(channel.appointment_open=='0' || isXSH == 0)?'hidden':''}}">
+          <view class="medWhite" hidden="{{channel.appointment_open=='0'?'hidden':''}}">
             <view class="title_1">
-              <view class="title_bold">
+              <view class="title_bold" style="width:30%">
                 预约时间
               </view>
-              <view style="display: inline-flex;justify-content: flex-end;">
+              <view style="width: 70%;display: inline-flex;justify-content: flex-end;">
                 <!-- <picker  class="title_right" style="width: unset;margin-left:unset;color: #555555;font-size: 28rpx;" 
                   value="{{multiIndex}}" range="{{MultiArray}}" onChange="bindMultiPickerChange" onColumnchange="bindMultiPickerColumnChange">
                   <view class="picker" style="margin:auto">
@@ -239,22 +202,20 @@
               </view>
             </view>
           </view>
-          <view class="medWhite" onTap="bindCouponCheck" a:if="{{choose_type==0}}">
+          <view class="medWhite" onTap="bindCouponCheck">
             <view class="title_1">
               <view class="title_bold" style="width:30%">
                 优惠券
               </view>
-              <view class="title_view">
-                <view id="coupon_payment" a:if="{{coupon_payment!='不使用'&&coupon_payment!='无'}}">
-                  -¥{{coupon_payment}}
-                </view>
-                <view id="coupon_payment" a:else>
-                  {{coupon_payment}}
-                </view>
-                <view style="align-self:center">
-                  <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
-                  </image>
-                </view>
+              <view id="coupon_payment" a:if="{{coupon_payment!='不使用'&&coupon_payment!='无'}}">
+                -¥{{coupon_payment}}
+              </view>
+              <view id="coupon_payment" a:else>
+                {{coupon_payment}}
+              </view>
+              <view style="align-self:center">
+                <image id="the_third_arrow" class="right_arrow" src="../../images/rightArrow.png">
+                </image>
               </view>
             </view>
           </view>
@@ -273,42 +234,7 @@
             </view>
           </view>
         </view>
-
-        <!-- <view>
-        <view class="medWhite">
-          <view class="title_1">
-            <view class="title_bold">支付方式</view>
-          </view>
-          <view style="display:flex;align-items: center;justify-content: space-evenly;">
-            <view class="new_gray_radius {{num==0?'active':''}}" data-num='0' onTap="changeType">
-              <image class="icon_img" src="../../images/icon_wechat_new.png"></image>
-              <view class="icon_title">支付宝支付</view>
-              <image a:if="{{num==0}}" class="icon_select_img" src="../../images/bala_current_cz.png"></image>
-            </view>
-            <view class="new_gray_radius {{num==1?'active':''}}" data-num='1' onTap="changeType">
-              <image class="icon_img" src="../../images/icon_meituan_new.png"></image>
-              <view class="icon_title">美团</view>
-              <image a:if="{{num==1}}" class="icon_select_img" src="../../images/bala_current_cz.png"></image>
-            </view>
-            <view class="new_gray_radius {{num==2?'active':''}}" data-num='2' onTap="changeType">
-              <image class="icon_img" src="../../images/icon_jd_new.png"></image>
-              <view class="icon_title">京东</view>
-              <image a:if="{{num==2}}" class="icon_select_img" src="../../images/bala_current_cz.png"></image>
-            </view>
-          </view>
-          <view a:if="{{num==1 || num==2}}" class="P5 app_flex" style="margin-bottom: 0rpx;">
-            <view class="P5_1 app_font">核销码</view>
-            <input class="P5_2 app_font" style="padding-left:10rpx" placeholder="请输入核销码" placeholder-class="place_style" onInput="bindVerificationCode" maxlength="50" value="{{verification_code}}"></input>
-            <view class="clear_ver_vode" a:if="{{verification_code}}" catchTap="clearVerificationCode">
-              <image class="icon_clear" style="margin-right:0" src="../../images/icon_clear_new.png"></image>
-            </view>
-          </view>
-          <view a:if="{{num==1 || num==2}}" style="height: 1px;width: 620rpx;background: #DDDDDD;margin: 0rpx 28rpx;"></view>
-          <view style="height:30rpx"></view>
-        </view>
-      </view> -->
-
-        <!-- <view>
+        <view>
           <view class="medWhite" a:if="{{choose_type==1}}">
             <view class="title_1">
               <view class="title_bold">
@@ -337,16 +263,16 @@
             <view style="height:10rpx">
             </view>
           </view>
-        </view> -->
-        <!-- <view class="div_policy">
-          <checkbox-group onChange="changePolicy" style="display: flex;align-items: center;">
+        </view>
+        <view class="div_policy">
+          <checkbox-group onChange="changePolicy">
             <checkbox class="round pink" checked="{{policyChecked}}" id="privacy_radio">
             </checkbox>
             <label for="privacy_radio" id="privacy_policy">
               已阅读并同意
               <text class="underline_gray" catchTap="bindYYXZ">预约须知
               </text>
-              <text>
+              <text>、
               </text>
               <text class="underline_gray" catchTap="bindUserProtocol">用户服务协议
               </text>
@@ -355,43 +281,31 @@
               </text>
             </label>
           </checkbox-group>
-        </view> -->
-        <view class="div_policy" a:if="{{yyxz_show==1}}">
-          <checkbox-group onChange="changePolicy" style="display: flex;align-items: center;">
-            <checkbox class="round pink" checked="{{policyChecked}}" id="privacy_radio">
-            </checkbox>
-            <label for="privacy_radio" id="privacy_policy">
-              已阅读并同意
-              <text class="underline_gray" catchTap="bindYYXZ">预约须知
-              </text>
-            </label>
-          </checkbox-group>
         </view>
       </view>
-      <view style="height:150rpx"></view>
-
-      <view class="fixed_view">
-        <view id="button_whole" class="flex margin-bottom text-center">
-          <view id="button_left" class="basis-lg bg-grey  " a:if="{{choose_type==0&&(coupon_payment=='不使用'||coupon_payment=='无')}}">
-            应付 ¥{{new_payment_amount}}
-          </view>
-          <view id="button_left_coupon" class="basis-lg bg-grey  " a:if="{{choose_type==0&&coupon_payment!='不使用'&&coupon_payment!='无'}}">
-            <view id="coupon_font_top">应付 ¥{{new_payment_amount}}</view>
-            <!-- <view id="coupon_font_top" a:if="{{coupon_payment!=24.89}}">
-              应付 ¥{{payment_amount-coupon_payment}}
-            </view>
-            <view id="coupon_font_top" a:if="{{coupon_payment==24.89}}">
-              应付 ¥0.01
-            </view> -->
-            <view id="coupon_font_bottom">
-              已优惠¥{{coupon_payment}}
-            </view>
-          </view>
-          <view id="button_left" style="padding-left:48rpx" class="basis-lg bg-grey  " a:if="{{choose_type==1 || choose_type==2}}">
-            {{pay_channel}}
-          </view>
-          <view id="button_right" class="basis-sm bg-grey" onTap="submitBuffer">{{(choose_type==1 || choose_type==2) ? "提交信息":"提交订单"}}</view>
+      <view id="button_whole" class="flex margin-bottom text-center">
+        <view id="button_left" class="basis-lg bg-grey  " a:if="{{choose_type==0&&(coupon_payment=='不使用'||coupon_payment=='无')}}">
+          应付 ¥{{payment_amount}}.00
         </view>
+        <view id="button_left_coupon" class="basis-lg bg-grey  " a:if="{{choose_type==0&&coupon_payment!='不使用'&&coupon_payment!='无'}}">
+          <view id="coupon_font_top" a:if="{{coupon_payment!=34.99}}">
+            应付 ¥{{payment_amount-coupon_payment}}.00
+          </view>
+          <view id="coupon_font_top" a:if="{{coupon_payment==34.99}}">
+            应付 ¥0.01
+          </view>
+          <view id="coupon_font_bottom">
+            已优惠¥{{coupon_payment}}
+          </view>
+        </view>
+        <view id="button_left" style="padding-left:48rpx" class="basis-lg bg-grey  " a:if="{{choose_type==1}}">
+          {{pay_channel}}
+        </view>
+        <view id="button_right" class="basis-sm bg-grey" onTap="submitBuffer">
+          提交订单
+        </view>
+      </view>
+      <view style="height:200rpx">
       </view>
     </form>
   </view>
@@ -532,46 +446,6 @@
       </scroll-view>
     </view>
   </modal-view>
-
-  <!-- 公告弹框 -->
-  <modal-view show="{{showNotice}}" noCancel="{{true}}" title="{{promise_title}}" onConfirm='noticeConfirm' confirmText='我知道了' cancelText='自定义取消'>
-    <view class='modal-content'>
-      <scroll-view scroll-y class='main-content' id="main-content-1">
-        <image src="{{promise_url}}" mode="widthFix" style="width: 100%;"></image>
-      </scroll-view>
-    </view>
-  </modal-view>
-
-  <!-- 是否营业时间弹框 -->
-  <modal-view show="{{isShowTime}}" noCancel="{{true}}" title="{{timeTitle}}" onConfirm='submitConfirm' confirmText='好的，我知道了' cancelText='自定义取消'>
-    <view class='modal-content'>
-      <scroll-view scroll-y class='main-content' id="main-content-1">
-        <view class="modal_font1">{{timeTips}}</view>
-       
-        <view class="modal_font2">{{timeBusinessTime}}</view>
-
-      </scroll-view>
-    </view>
-  </modal-view>
-
-
-<modal-view show="{{isShowXSH}}" noCancel="{{true}}" title="温馨提示" bindcancel="modalCancel" bindconfirm='submitConfirmXSH' confirmText='好的，我知道了' cancelText='自定义取消'>
-  <view class='modal-content'>
-    <scroll-view scroll-y class='main-content' id="main-content-1">
-      <view class="modal_font1">当前时间为非营业时间，无法预约，为避免影响您的行程，请预约其他采样站</view>
-    </scroll-view>
-  </view>
-</modal-view>
-
-
-<modal-view show="{{isShowCanUse}}" noCancel="{{true}}" title="{{yyts_title}}" bindcancel="modalCancel" bindconfirm='submitConfirmCanUse' confirmText='好的，我知道了' cancelText='自定义取消'>
-  <view class='modal-content'>
-    <scroll-view scroll-y class='main-content' id="main-content-1">
-      <view class="modal_font1">{{yyts_text}}</view>
-    </scroll-view>
-  </view>
-</modal-view>
-
   <!--<timePicker pickerShow="{{startIsPickerShow}}"  id="picker"  config="{{pickerConfig}}"  a:if="{{startIsPickerRender}}"  onHidePicker="start_time_hide"  onSetPickerTime="set_start_time" ></timePicker> -->
   <subscribe-msg />
 </view>

@@ -24,7 +24,6 @@ _Page({
    * 页面的初始数据
    */
   data: {
-    num: '0',
     bindBackFlag: false,
     // forbiddenFlag:false,//禁止进入选择采样点页面
     phoneCode: ["", ""],
@@ -52,6 +51,7 @@ _Page({
     address: "",
     locationName: "",
     choose_type: 0,
+    num: 1,
     name: "",
     phone: "",
     onlineid: 1,
@@ -71,7 +71,7 @@ _Page({
     cardIndex: 0,
     genderIndex: 0,
     gender: "男",
-    pay_channel: "支付宝",
+    pay_channel: "美团",
     codeBtText: "获取验证码",
     codeBtState: false,
     hiddenFlag: false,
@@ -107,20 +107,7 @@ _Page({
     objectMultiArray: [],
     multiIndex: [0, 0],
     appo_date: "",
-    appo_time: "",
-    new_payment_amount: 0,
-     // 新增
-    showNotice: false,
-    isAddSubject: 0,  // 0-默认添加受检人   1-选择受检人
-    card_name: '',
-    userinfo_id: '',
-    isAllSubject: 0, // 判断是否有受检人
-    bindBackSubject: false, // 判断是否点击添加受检人/选择受检人
-    isShowTime: false, // 是否在营业时间内
-    can_use_new: 1,
-    isXSH: 0, // 0 不显示  1 显示
-    isShowXSH: false,
-    isShowCanUse: false
+    appo_time: ""
   },
   onLoad: function(options) {
     var that = this; // console.log(utils.checkAuditTime('09:00-12:00'));
@@ -146,11 +133,11 @@ _Page({
       console.log(options);
       console.log(options.fromContinueFlag);
     } else {
-      // that.bindHistoryInfo();
+      that.bindHistoryInfo();
     }
 
     that.setData({
-      choose_type: options.choose_type //0 支付宝 1 三方
+      choose_type: options.choose_type //0 微信 1 三方
     });
 
     if (options.fix_channel_id != undefined && options.fix_channel_id != -1) {
@@ -300,25 +287,6 @@ _Page({
             payment_working_time: detectionTypeArr[0].working_time
           });
           console.log(detectionTypeArr);
-
-          if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
-            that.setData({
-              new_payment_amount: that.data.payment_amount
-            })
-          } else {
-            let intPaymentAmount = that.data.payment_amount * 100;
-            let intCouponPayment = that.data.coupon_payment * 100;
-            let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
-            if(payment_amount > 0){
-
-            }else{
-              payment_amount = 0.01;
-            }
-            that.setData({
-              new_payment_amount: payment_amount
-            })
-          }
-          
         } else {
           // box.showToast(res.msg);
         }
@@ -426,8 +394,7 @@ _Page({
                 work_time_remarks: info.work_time_remarks,
                 MultiArray: info.MultiArray,
                 objectMultiArray: info.objectMultiArray,
-                multiIndex: [0, 0],
-                isXSH: info.isXSH
+                multiIndex: [0, 0]
               });
               that.getDetectionType();
               that.getbaseData(channel);
@@ -437,11 +404,7 @@ _Page({
                 appo_time:
                   that.data.objectMultiArray[that.data.multiIndex[0]].time[
                     that.data.multiIndex[1]
-                  ].time_section,
-                can_use_new:
-                  that.data.objectMultiArray[that.data.multiIndex[0]].time[
-                    that.data.multiIndex[1]
-                  ].can_use,
+                  ].time_section
               });
             } else {
               box.showToast(res.msg);
@@ -534,8 +497,7 @@ _Page({
                 work_time_remarks: info.work_time_remarks,
                 MultiArray: info.MultiArray,
                 objectMultiArray: info.objectMultiArray,
-                multiIndex: [0, 0],
-                isXSH: info.isXSH
+                multiIndex: [0, 0]
               });
 
               that.getDetectionType();
@@ -546,11 +508,7 @@ _Page({
                 appo_time:
                   that.data.objectMultiArray[that.data.multiIndex[0]].time[
                     that.data.multiIndex[1]
-                  ].time_section,
-                can_use_new:
-                  that.data.objectMultiArray[that.data.multiIndex[0]].time[
-                    that.data.multiIndex[1]
-                  ].can_use,
+                  ].time_section
               });
             } else {
               box.showToast(res.msg);
@@ -651,8 +609,7 @@ _Page({
                 work_time_remarks: channel.work_time_remarks,
                 MultiArray: channel.MultiArray,
                 objectMultiArray: channel.objectMultiArray,
-                multiIndex: [0, 0],
-                isXSH: channel.isXSH
+                multiIndex: [0, 0]
               });
 
               console.log('1111111111111111111111111111111111111')
@@ -661,8 +618,7 @@ _Page({
               that.getbaseData(channel);
               that.setData({
                 appo_date:that.data.objectMultiArray[that.data.multiIndex[0]].date,
-                appo_time:that.data.objectMultiArray[that.data.multiIndex[0]].time[that.data.multiIndex[1]].time_section,
-                can_use_new:that.data.objectMultiArray[that.data.multiIndex[0]].time[that.data.multiIndex[1]].can_use,
+                appo_time:that.data.objectMultiArray[that.data.multiIndex[0]].time[that.data.multiIndex[1]].time_section
               });
             } else {
               // box.showToast(res.msg);
@@ -747,8 +703,7 @@ _Page({
                 work_time_remarks: channel.work_time_remarks,
                 MultiArray: channel.MultiArray,
                 objectMultiArray: channel.objectMultiArray,
-                multiIndex: [0, 0],
-                isXSH: channel.isXSH
+                multiIndex: [0, 0]
               });
 
               that.getDetectionType();
@@ -759,11 +714,7 @@ _Page({
                 appo_time:
                   that.data.objectMultiArray[that.data.multiIndex[0]].time[
                     that.data.multiIndex[1]
-                  ].time_section,
-                can_use_new:
-                  that.data.objectMultiArray[that.data.multiIndex[0]].time[
-                    that.data.multiIndex[1]
-                  ].can_use
+                  ].time_section
               });
             } else {
               // box.showToast(res.msg);
@@ -1003,122 +954,90 @@ _Page({
     console.log(id_card);
     console.log(openid);
 
-    // if (onlineFlag == false) {
-    //   //线下
-    // } else {
-    //   //线上
-    //   if (cardIndex != 0) {
-    //     //其他身份证件
-    //     if (name == "") {
-    //       box.showToast("请填写与证件一致的姓名");
-    //       return;
-    //     }
+    if (onlineFlag == false) {
+      //线下
+    } else {
+      //线上
+      if (cardIndex != 0) {
+        //其他身份证件
+        if (name == "") {
+          box.showToast("请填写与证件一致的姓名");
+          return;
+        }
 
-    //     if (age == "") {
-    //       box.showToast("请填写年龄");
-    //       return;
-    //     } else if (id_card == "") {
-    //       box.showToast("请填写正确的证件号码");
-    //       return;
-    //     }
-    //   } else {
-    //     //线上 且选择身份证
-    //     if (name == "") {
-    //       box.showToast("请填写与证件一致的姓名");
-    //       return;
-    //     } else if (id_card == "") {
-    //       box.showToast("请填写正确的证件号码");
-    //       return;
-    //     }
+        if (age == "") {
+          box.showToast("请填写年龄");
+          return;
+        } else if (id_card == "") {
+          box.showToast("请填写正确的证件号码");
+          return;
+        }
+      } else {
+        //线上 且选择身份证
+        if (name == "") {
+          box.showToast("请填写与证件一致的姓名");
+          return;
+        } else if (id_card == "") {
+          box.showToast("请填写正确的证件号码");
+          return;
+        }
 
-    //     if (!utils.checkIdCard(id_card)) {
-    //       box.showToast("请填写正确的证件号码");
-    //       return;
-    //     }
-    //   }
-    // }
+        if (!utils.checkIdCard(id_card)) {
+          box.showToast("请填写正确的证件号码");
+          return;
+        }
+      }
+    }
 
-    // if (phone == "") {
-    //   box.showToast("请输入手机号码");
-    //   return;
-    // } else if (!utils.checkPhone(phone)) {
-    //   box.showToast("手机号码格式不正确");
-    //   return;
-    // } else if (code == "") {
-    //   box.showToast("请填写验证码");
-    //   return;
-    // } else if (phoneCode[0] == "") {
-    //   //进入这里说明未点击获取验证码
-    //   box.showToast("请获取验证码");
-    //   return;
-    // } else if (phoneCode[0] != phone) {
-    //   box.showToast("验证码过期");
-    //   return;
-    // } else if (phoneCode[1] != code) {
-    //   box.showToast("验证码错误");
-    //   return;
-    // }
-    if (that.data.userinfo_id == '') {
-      box.showToast("请添加受检人");
-      return
+    if (phone == "") {
+      box.showToast("请输入手机号码");
+      return;
+    } else if (!utils.checkPhone(phone)) {
+      box.showToast("手机号码格式不正确");
+      return;
+    } else if (code == "") {
+      box.showToast("请填写验证码");
+      return;
+    } else if (phoneCode[0] == "") {
+      //进入这里说明未点击获取验证码
+      box.showToast("请获取验证码");
+      return;
+    } else if (phoneCode[0] != phone) {
+      box.showToast("验证码过期");
+      return;
+    } else if (phoneCode[1] != code) {
+      box.showToast("验证码错误");
+      return;
     } else if (
       detectionTypeArr.length == 1 &&
       detectionTypeArr[0].grayFlag == true
     ) {
       box.showToast("当前时间该采样点不在营业时间");
       return;
-    } else if (that.data.yyxz_show == 1) {
-      if (that.data.policyChecked == false) {
-        box.showToast("请阅读并勾选预约须知")
-        return
-      }
-    } 
-    
-    if (that.data.channel.appointment_open == 1) {
-      // if (
-      //   that.data.objectMultiArray[that.data.multiIndex[0]].time[
-      //     that.data.multiIndex[1]
-      //   ].can_use == 0
-      // ) 
-      if (that.data.can_use_new == 0) {
-        // _my.showModal({
-        //   title: that.data.yyts_title,
-        //   content: that.data.yyts_text,
-        //   showCancel: false,
+    } else if (that.data.policyChecked == false) {
+      box.showToast("请阅读并勾选协议");
+      return;
+    } /*else if (that.data.channel.appointment_open == 1) {
+      if (
+        that.data.objectMultiArray[that.data.multiIndex[0]].time[
+          that.data.multiIndex[1]
+        ].can_use == 0
+      ) {
+        _my.showModal({
+          title: that.data.yyts_title,
+          content: that.data.yyts_text,
+          showCancel: false,
 
-        //   success(res) {
-        //     if (res.confirm) {
-        //       console.log("用户点击了确定");
-        //     }
-        //   }
-        // });
-        that.setData({
-          isShowCanUse: true
+          success(res) {
+            if (res.confirm) {
+              console.log("用户点击了确定");
+            }
+          }
         });
 
         return;
       }
-    }
-
-    if(this.data.choose_type ==1 || this.data.choose_type ==2){
-      if (this.data.verification_code == '') {
-        box.showToast("请输入核销码");
-        return
-      }
-    }
-
-    /**
-     * appointment_open  是否开启预约  1 开启  0 未开启
-     * isXSH 0 不显示   1 显示
-     * 根据只开一天预约并且只能预约当天的时间,时间过期了提示
-     */
-    if(this.data.channel.appointment_open == '1' && this.data.isXSH == 0){
-      // box.showToast("当前时间为非营业时间，无法预约，为避免影响您的行程，请预约其他采样站",'',2000);
-      this.setData({
-        isShowXSH: true
-      });
-      return
-    }
+    }*/
 
     console.log("payment_amount=" + that.data.payment_amount);
 
@@ -1135,9 +1054,7 @@ _Page({
       console.log("急检");
       that.bindshowModal_3(); //此时已经完成所有校验
     } else {
-      // that.submit();
-      //  新增检测是否在营业时间接口判断
-      that.getCheckTime();
+      that.submit();
     }
   }, 3000),
   // 提交确认出库信息
@@ -1161,31 +1078,15 @@ _Page({
     console.log(that.data.payment_amount);
     console.log(coupon_payment);
 
-    // if (
-    //   that.data.coupon_payment == "不使用" ||
-    //   that.data.coupon_payment == "无"
-    // ) {
-    //   var payment_amount = that.data.payment_amount;
-    // } else if (that.data.coupon_payment == 24.89) {
-    //   var payment_amount = 0.01;
-    // } else {
-    //   var payment_amount = that.data.payment_amount - coupon_payment;
-    // }
-
-    if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
-      var payment_amount = that.data.payment_amount
+    if (
+      that.data.coupon_payment == "不使用" ||
+      that.data.coupon_payment == "无"
+    ) {
+      var payment_amount = that.data.payment_amount;
+    } else if (that.data.coupon_payment == 34.99) {
+      var payment_amount = 0.01;
     } else {
-      let intPaymentAmount = that.data.payment_amount * 100
-      let intCouponPayment = coupon_payment * 100;
-      var payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
-      if(payment_amount > 0){
-
-      }else{
-        payment_amount = 0.01;
-      }
-      // this.setData({
-      //   payment_amount: payment_amount
-      // })
+      var payment_amount = that.data.payment_amount - coupon_payment;
     }
 
     var coupon_id = that.data.coupon_id;
@@ -1256,24 +1157,20 @@ _Page({
 
     var data1 = {
       open_id: openid,
-      // name: that.data.name,
-      // gender: that.data.gender,
-      // age: that.data.age,
-      // card_type: that.data.cardIndex,
-      // id_card: that.data.idcard,
-      // phone: phone,
+      name: that.data.name,
+      gender: that.data.gender,
+      age: that.data.age,
+      card_type: that.data.cardIndex,
+      id_card: that.data.idcard,
+      phone: phone,
       test_type: typeid,
       payment_amount: payment_amount,
       channel: channel_id,
-      // onlineFlag: that.data.onlineFlagNum,
+      onlineFlag: that.data.onlineFlagNum,
       coupon_id: coupon_id,
       appointment_date: appointment_date,
-      pname: "卡尤迪核酸检测",
-      id: that.data.userinfo_id,
-      // pay_channel: that.data.pay_channel //支付渠道
+      pname: "卡尤迪核酸检测"
     };
-
-    console.log('--data1-->:',data1)
 
     if (choose_type == 0) {
       //TODO
@@ -1350,65 +1247,18 @@ _Page({
     } else if (choose_type == 1) {
       var data2 = {
         open_id: openid,
-        examined_person_id: that.data.userinfo_id,
+        name: name,
+        gender: that.data.gender,
+        age: that.data.age,
+        card_type: that.data.card_type,
+        id_card: that.data.idcard,
+        phone: phone,
+        test_type: typeid,
+        payment_amount: payment_amount,
         channel: channel_id,
-        appointment_time: appointment_date,
         verification_code: verification_code,
-        // pay_channel: that.data.pay_channel //支付渠道
+        onlineFlag: that.data.onlineFlagNum
       };
-      request.request_get('/alipay/addMeituanPaymentOrder.hn', data2, function (res) {
-        console.info('回调', res)
-        if (res) {
-          if (res.success) {
-            box.showToast("核销成功”，且跳转至预约详情页",'',1000);
-
-            console.log(res)
-            that.setData({
-              appointment_num: res.msg,
-            })
-            let templateList = [
-              "932e319891ea499e961a0ec773b4a98f",
-              "8b63944e35f342b8bc206081fe46dbda",
-              "73035c012b7a4c1da4d29900aa43e1dc"
-            ];
-            my.requestSubscribeMessage({
-              entityIds: templateList,
-              success: res => {
-                // res.behavior == 'subscribe'
-                console.log("接口调用成功的回调", res);
-                let data = {
-                  openid: app.globalData.openid
-                };
-                request.request_get("/alipay/sendmsg.hn", data, function(res) {
-                        console.info("回调", res);
-                });
-              },
-              fail: res => {
-                console.log("接口调用失败的回调", res);
-              },
-              complete: res => {
-                console.log("接口调用结束的回调", res);
-                _my.navigateTo({
-                        url:
-                          "/pages/appointmentRecord/appointmentDetail?appointment_num=" +
-                          that.data.appointment_num +
-                          "&continueFlag=true" +
-                          "&onlineFlagNum=" +
-                          that.data.onlineFlagNum +
-                          "&dynamicTimeFlag=" +
-                          that.data.dynamicTimeFlag
-                      });
-              }   
-            });
-          } else {
-            console.log(res.msg);
-            box.showToast(res.msg);
-          }
-          // box.hideLoading();
-        } else {
-          box.showToast("网络不稳定，请重试");
-        }
-      })
       // request.request_get("/a/addMeituanPaymentOrder.hn", data2, function(res) {
       //   console.info("支付回调", res);
 
@@ -1460,14 +1310,12 @@ _Page({
     _my.hideLoading({
       success: res => {}
     });
-  }, 2000),
+  }, 300),
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getAllSubject();
-
     var that = this;
     console.log("onshow方法");
     // var pages = getCurrentPages();
@@ -1479,47 +1327,10 @@ _Page({
     console.log(that.data.coupon_payment);
     console.log("bindBackFlag=" + that.data.bindBackFlag);
 
-
-    if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
-      that.setData({
-        new_payment_amount: that.data.payment_amount
-      })
-    } else {
-      let intPaymentAmount = that.data.payment_amount * 100
-      let intCouponPayment = that.data.coupon_payment * 100;
-      let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
-      if(payment_amount > 0){
-
-      }else{
-        payment_amount = 0.01;
-      }
-      that.setData({
-        new_payment_amount: payment_amount
-      })
-    }
-
     that.setData({
       coupon_payment: that.data.coupon_payment,
       coupon_id: that.data.coupon_id
     });
-
-    if (that.data.bindBackSubject == true) {
-      this.setData({
-        bindBackSubject: false,
-        isAddSubject: that.data.isAddSubject,
-        userinfo_id: that.data.userinfo_id,
-        name: that.data.name,
-        gender: that.data.gender,
-        age: that.data.age,
-        cardIndex: that.data.cardIndex,
-        idcard: that.data.idcard,
-        phone: that.data.phone,
-        card_name: that.data.card_name,
-        onlineFlag: that.data.onlineFlag,
-        onlineFlagNum: that.data.onlineFlagNum,
-
-      });
-    }
 
     if (that.data.bindBackFlag == true) {
       that.getFixedChannel(that.data.channel.channel_id); // 选中新采样点返回
@@ -1690,23 +1501,13 @@ _Page({
     if (that.data.num == 1) {
       //美团
       that.setData({
-        pay_channel: "美团",
-        verification_code: '',
-        choose_type: 1
+        pay_channel: "美团"
       });
     } else if (that.data.num == 2) {
       //京东
       that.setData({
-        pay_channel: "京东",
-        verification_code: '',
-        choose_type: 2
+        pay_channel: "京东"
       });
-    } else if(that.data.num == 0){ //支付宝
-      that.setData({
-        pay_channel: '支付宝',
-        verification_code: '',
-        choose_type: 0
-      })
     }
   },
   changeTestType: function(e) {
@@ -1739,24 +1540,6 @@ _Page({
       payment_working_time: e.currentTarget.dataset.workingtime,
       coupon_payment: coupon_payment
     });
-    if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
-      that.setData({
-        new_payment_amount: that.data.payment_amount
-      })
-    } else {
-      let intPaymentAmount = that.data.payment_amount * 100
-      let intCouponPayment = that.data.coupon_payment * 100;
-      let payment_amount = (parseInt(intPaymentAmount) - parseInt(intCouponPayment))/100;
-      if(payment_amount > 0){
-
-      }else{
-        payment_amount = 0.01;
-      }
-      that.setData({
-        new_payment_amount: payment_amount
-      })
-    }
-
   },
 
   //显示地图
@@ -2158,19 +1941,16 @@ _Page({
         .can_use == 0
     ) {
       //提醒当前时间段不可预约
-      // _my.showModal({
-      //   title: this.data.yyts_title,
-      //   content: this.data.yyts_text,
-      //   showCancel: false,
+      _my.showModal({
+        title: this.data.yyts_title,
+        content: this.data.yyts_text,
+        showCancel: false,
 
-      //   success(res) {
-      //     if (res.confirm) {
-      //       console.log("用户点击了确定");
-      //     }
-      //   }
-      // });
-      this.setData({
-        isShowCanUse: true
+        success(res) {
+          if (res.confirm) {
+            console.log("用户点击了确定");
+          }
+        }
       });
 
       return;
@@ -2245,11 +2025,7 @@ _Page({
         yyts_title: msg.yyts_title,
         yyts_text: msg.yyts_text,
         fwxy_url: msg.fwxy_url,
-        yszz_url: msg.yszz_url,
-        is_promise: msg.is_promise || 2, //是否显示公告 1-显示
-        promise_title: msg.promise_title,
-        promise_url: msg.promise_url,
-        promise_announcement: msg.promise_announcement
+        yszz_url: msg.yszz_url
       });
     });
   },
@@ -2268,13 +2044,8 @@ _Page({
       for (let i = 0; i < time.length; i++) {
         const singletime = time[i];
         let child2 = new Object();
-        // child2.name = singletime.time_section;
-        // child2.can_use = singletime.can_use;
-        let timeTitle = '';
-        if(singletime.can_use == 0){
-          timeTitle = '(已约满)';
-        }
-        child2.name = singletime.time_section+""+timeTitle;
+        child2.name = singletime.time_section;
+        //child2.can_use = singletime.can_use;
         childlist.push(child2);
       }
       child.subList = childlist;
@@ -2293,11 +2064,6 @@ _Page({
         }
         let date = res.result[0].name;
         let time = res.result[1].name;
-        if(time){
-          if(time.indexOf('(')>=0){
-            time = time.substring(0,11);
-          }
-        }
         console.log(date);
         console.log(time);
         for (let j = 0; j < or_data.length; j++) {
@@ -2308,10 +2074,6 @@ _Page({
               const time2 = time1[z];
               if (time2.time_section == time) {
                 const can_use = time2.can_use;
-
-                that.setData({
-                  can_use_new: can_use
-                });
 
                 if (can_use == 0) {
                   box.showToast(that.data.yyts_title);
@@ -2332,128 +2094,5 @@ _Page({
         }
       }
     });
-  },
-  /**
-   * 公告
-   */
-  bindNoticeClick(){
-    var that = this;
-    that.setData({
-      showNotice: true
-    });
-  },
-  noticeConfirm(){
-    var that = this;
-    that.setData({
-      showNotice: false
-    });
-  },
-  /**
-   * 添加受检人
-   */
-  bindAddSubject(){
-    if(this.data.isAllSubject == 1){
-      _my.navigateTo({
-        url: '/pages/selectSubject/index'
-      });
-    }else{
-      _my.navigateTo({
-        url:'/pages/addSubject/index?isAddSub=0'
-      });
-    }
-  },
-  bindSelectSubject(){
-    _my.navigateTo({
-      url: '/pages/selectSubject/index'
-    });
-  },
-  clearVerificationCode(){
-    var that = this;
-    that.setData({
-      verification_code: ''
-    })
-  },
-  getAllSubject(){
-    let that = this;
-    var openid = app.globalData.openid;
-    let data = {
-      open_id: openid
-    }
-    request.request_get('/a/getAllSubject.hn', data, function (res) {
-      console.info('回调', res)
-      if (res) {
-        if (res.success) {
-          if(res && res.msg && res.msg.length > 0){
-            that.setData({
-              isAllSubject: 1
-            })
-            let isAddSubjectNew = 0;
-            let userinfo_id_new = '';
-            for(let i = 0; i < res.msg.length; i++){
-              if(res.msg[i].id == that.data.userinfo_id){
-                isAddSubjectNew = 1;
-                userinfo_id_new = that.data.userinfo_id;
-              }
-            }
-            that.setData({
-              isAddSubject: isAddSubjectNew,
-              userinfo_id: userinfo_id_new
-            });
-          }else {
-            that.setData({
-              isAllSubject: 0,
-              isAddSubject: 0
-            })
-          }
-        } else {
-          box.showToast(res.msg);
-        }
-      } else {
-        box.showToast("网络不稳定，请重试");
-      }
-    })
-  },
-  /**
-   * 下单须知
-   */
-  submitConfirm: utils.throttle(function () {
-    var that = this
-    that.setData({
-      isShowTime: false
-    })
-    that.submit()
-  }, 2000),
-  getCheckTime(){
-    let that = this;
-    let data = {
-      test_type: that.data.typeid
-    }
-    request.request_get('/a/is_during_business_hours.hn', data, function (res) {
-      console.info('回调', res)
-      if (res) {
-          if (res.during_business_hours){
-            that.submit();
-          } else {
-            that.setData({
-              isShowTime: true,
-              timeTitle: res.title,
-              timeTips: res.Tips,
-              timeBusinessTime: res.business_time
-            })
-          }
-      } else {
-        box.showToast("网络不稳定，请重试");
-      }
-    })
-  },
-  submitConfirmXSH(){
-    this.setData({
-      isShowXSH: false
-    });
-  },
-  submitConfirmCanUse(){
-    this.setData({
-      isShowCanUse: false
-    });
-  },
+  }
 });

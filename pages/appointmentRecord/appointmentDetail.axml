@@ -4,11 +4,11 @@
     <view class="P1" style="height:620rpx">
       <view id="color_style_1" style="background-color:{{onlineFlagNum==0? '#418BE4' : '#E06596' }};">
         <view id="design_1">
-          <image id="jingdong_image" src="../../images/icon_jd.png" a:if="{{payment_type== 6}}">
+          <image id="jingdong_image" src="../../images/icon_jd.png" a:if="{{payment_channel=='jingdong'}}">
           </image>
-          <image id="meituan_image" src="../../images/icon_meituan.png" a:if="{{payment_type== 5}}">
+          <image id="meituan_image" src="../../images/icon_meituan.png" a:if="{{payment_channel=='meituan'}}">
           </image>
-          <image id="wechat_image" src="../../images/icon_alipay.png" a:if="{{payment_type== 3}}">
+          <image id="wechat_image" src="../../images/icon_alipay.png" a:if="{{payment_channel=='alipay'}}">
           </image>
         </view>
         <view id="font_1">
@@ -161,14 +161,14 @@
             ¥{{payment_amount}}
           </view>
         </view>
-        <view class="P2_1 app_flex" a:if="{{verification_code}}">
-        <view class="P2_1_3">核销码</view>
-        <view class="P2_1_2">{{verification_code}}</view>
-      </view>
-      <view class="P2_1 app_flex">
-        <view class="P2_1_3">{{verification_code ? '核销时间':'下单时间'}}</view>
-        <view class="P2_1_2">{{create_time}}</view>
-      </view>
+        <view class="P2_1 app_flex">
+          <view class="P2_1_3">
+            下单时间
+          </view>
+          <view class="P2_1_2">
+            {{create_time}}
+          </view>
+        </view>
       </view>
     </view>
     <view class="P1" style="margin-bottom:100rpx">

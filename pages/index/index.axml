@@ -14,15 +14,17 @@
       </image>
     </view> -->
     <view class="image_column">
-      <view onTap="bindOnsite" data-type="0" class="view_item">
-        <image src="../../images/bt_personalAppointment.png" class="view_img"></image>
+      <view data-type="0" onTap="bindOnsite">
+        <image src="../../images/bt_personalAppointment.png">
+        </image>
       </view>
       <!-- <view hidden data-type="1" onTap="bindOnsite">
         <image src="../../images/bt_checkRegister.png">
         </image>
       </view> -->
-      <view onTap="bindAppointment"  class="view_item" style="padding: 0rpx 0rpx 20rpx 0rpx;">
-        <image src="../../images/appointmentRecord.png" class="view_img"></image>
+      <view onTap="bindAppointment">
+        <image src="../../images/appointmentRecord.png">
+        </image>
       </view>
     </view>
     <view id="coupon_bottom" onTap="bindCoupon">

@@ -8,9 +8,7 @@
     "pages/appointmentRecord/appointmentDetail",
     "pages/chooseSamplingPoint/chooseDistrict",
     "pages/chooseSamplingPoint/chooseSamplingPoint",
-    "pages/onsiteAppointment/onsiteAppointment",
-    "pages/addSubject/index",
-    "pages/selectSubject/index"
+    "pages/onsiteAppointment/onsiteAppointment"
   ],
   "plugins": {
     "subscribeMsg": {
