@@ -1,0 +1,45 @@
+<import-sjs from="../../utils/substring.sjs" name="tools"></import-sjs>
+
+<!-- <view class="page">
+    
+</view> -->
+
+<view class="policy_view">
+  <view class="policy_view_1">
+    <view class="policy_view_1_1">{{city}}</view>
+    <view class="policy_view_1_2" a:if="{{type_name}}">{{type_name}}</view>
+  </view>
+  <view class="policy_view_2">{{source_type}}</view>
+</view>
+
+<view class="page">
+  <view class="P1">
+    <block a:for="{{policyList}}" a:key="index">
+      <view class="P2 app_font" onTap="toInfo" data-id="{{item.id}}">
+        <view class="app_flex_new">
+          <view class="bold_font_new">{{item.title}}</view>
+          <view class="bold_font_2_new">{{item.time}}</view>
+        </view>
+        <view class="hr"></view>
+        <view class="P2_1 app_flex" style="padding: 14rpx 30rpx;margin: 0rpx;">
+          <view class="P2_1_1">{{tools.contentTrim(item.content)}}</view>
+        </view>
+      
+        <view class="button_flex_new_between">
+          <view class="type_text_1"></view>
+          <view style="display: flex;">
+            <view id="button_1" catchTap="toInfo" data-id="{{item.id}}">查看全文</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <view>
+      <!-- <image class="app_noinfo_img" src="../../image/nodata.png" mode="widthFix"></image> -->
+      <view class="app_noinfo_desc">{{tip}}</view>
+    </view>
+    <view a:if="{{alreadyChecked_temp==true}}">
+      <!-- <image class="app_noinfo_img" src="../../image/nodata.png" mode="widthFix"></image> -->
+      <view class="app_noinfo_desc">{{tip_temp}}</view>
+    </view>
+  </view>
+</view>

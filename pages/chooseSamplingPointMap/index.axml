@@ -17,7 +17,6 @@
     <view class="lable_view" style="margin-top:10rpx">
       <scroll-view scroll-x="{{true}}" style="white-space: nowrap; display: flex;">
         <view style="display: flex;height:50rpx;">
-          <!-- <text wx:for="{{lableList}}" catch:tap="bindLable" data-lableindex="{{index}}" data-lableid="{{item.id}}" wx:key="index" class="{{lableIndex == index ? 'lable_view_item_activety':'lable_view_item'}}">{{item.label_name}}</text> -->
           <view a:for="{{lableList}}" catchTap="bindLable" data-lableindex="{{index}}" data-lableid="{{item.id}}" a:key="index" class="{{item.isSelect ? 'lable_view_item_activety':'lable_view_item'}}">{{item.label_name}}</view>
         </view>
       </scroll-view>
@@ -41,17 +40,17 @@
       </block>
 
       <block a:for="{{channelList}}" a:key="index">
-        <view class="P2 app_font" style="margin-left:0rpx;margin-right:0rpx;margin-top:20rpx;position:relative;" data-name="{{item.channel_name}}"  data-distance="{{item.distance}}"   data-id="{{item.channel_id}}" data-paytypetexts="{{item.paytypetexts}}" onTap="bindCheckSamplingPoint">
+        <view class="P2 app_font" style="margin-left:0rpx;margin-right:0rpx;margin-top:20rpx;position:relative;" data-id="{{item.channel_id}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" onTap="bindCheckMap">
           <image a:if="{{hiddenFlag==false && index == 0 && channelList.length > 1}}" src="../../images/icon_0701_23.png" class="address_img"/>
-
+          
           <!-- <view class="app_flex">
             <view class="bold_font" style="width: 95%;margin-left:30rpx;">{{item.channel_name}}</view>
           </view> -->
-          <view class="new_title">{{item.channel_name}}</view>
-
-          <view class="map_view">
+          <view class="new_title" >{{item.channel_name}}</view>
+          
+          <view class="map_view" catchTap="openMap" data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}">
             <view class="map_view_title"><text style="color:#0072FF;" a:if="{{hiddenFlag==false}}">{{item.distance}}</text> |  {{item.site_description}}</view>
-            <view class="icon_view_4_new" catchTap="openMap" data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" data-site_description="{{item.site_description}}">
+            <view class="icon_view_4_new" >
               <image class="icon_24" src="../../images/icon_0701_24.png"></image>
               <!-- <view class="text_1_new">导航</view> -->
             </view>
@@ -68,69 +67,26 @@
             <view a:for="{{item.tag_text}}" a:for-index="tagIndex" a:for-item="items" class="lable_view_item_tag" style="display: inline-block;">{{items}}</view>
           </view>
 
-        </view>
-        
-      </block>
-      <block a:if="{{false}}" a:for="{{channelListPlus}}">
-        <view class="P2 app_font" data-name="{{item.channel_name}}" data-distance="{{item.distance}}" data-id="{{item.channel_id}}" 
-          onTap="bindCheckSamplingPoint">
-          <view class="app_flex">
-            <view class="bold_font">
-              {{item.channel_name}}
+          
+          <!-- <image class="icon_1_new" style="margin-right:10rpx;" src="../../images/icon_position_06.png"></image> -->
+          <view class="type_view">
+            <view class="map_view_type" style="width: 100%;padding: 12rpx 30rpx;margin-top: 20rpx;" a:if="{{item.is_big_screen == 1}}">
+              <view class="map_3_view_title">{{item.screen_text}}</view>
+              <view style="color: #0870FF;font-size: 24rpx;padding-top:4rpx;margin-left:10rpx;">{{item.big_screen_text}}</view>
             </view>
-            <view class="bold_font_2" a:if="{{hiddenFlag==false}}">
-              {{item.distance}}
-            </view>
-          </view>
-          <view a:for="{{item.workingTimeArr}}" a:for-index="textIndex" a:for-item="timeItem">
-            <view class="P2_1 app_flex">
-              <view class="P2_1_1">
-                <text a:if="{{textIndex==0}}">营业时间
-                </text>
-              </view>
-              <view class="P2_1_2">
-                {{timeItem}}
-              </view>
-            </view>
-          </view>
-          <view class="P2_1 app_flex" style="margin-top:6rpx">
-            <view class="P2_1_1">
-            </view>
-            <view class="P2_1_2">
-              {{item.work_time_remarks}}
-            </view>
-          </view>
-          <view class="P2_1 app_flex">
-            <view class="P2_1_1" style="width:70%;color:#A3A3A3;margin-top:12rpx">
-              {{item.site_description}}
-            </view>
-            <view data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" 
-              class="icon_view_1" catchTap="openMap">
-              <image class="icon_1" src="../../images/icon_positon_gray.png">
-              </image>
-            </view>
-            <view class="icon_view_2" data-phone="{{item.cstn}}" catchTap="phoneCall">
-              <image class="icon_2" src="../../images/icon_phone.png">
-              </image>
+
+            <view class="map_view_type" style="padding: 12rpx 14rpx 12rpx 30rpx;width: 100%;margin-top:20rpx;" a:for="{{item.paytypetexts}}" a:for-index="typeIndex" a:for-item="typeItem" data-name="{{item.channel_name}}"  data-distance="{{item.distance}}" data-id="{{item.channel_id}}" data-typeid="{{typeItem.id}}" catchTap="bindCheckSamplingPoint">
+              <view class="map_3_view_title">{{typeItem.paytype_text}}</view>
+              <view class="icon_view_3_new" >马上预约</view>
             </view>
           </view>
         </view>
       </block>
+
+
       
-      <!-- <view style="display:flex;justify-content:center">
-        <view>
-          <view class="app_noinfo_desc">
-            {{tip}}
-          </view>
-        </view>
-        <view a:if="{{alreadyChecked_temp==true}}">
-          <view class="app_noinfo_desc">
-            {{tip_temp}}
-          </view>
-        </view>
-      </view> -->
       <view style="display:flex;justify-content:center;padding: 50rpx 0rpx 30rpx;" a:if="{{overflowFlag}}">
-        <view  ><!-- a:if="{{alreadyChecked==true}}" -->
+        <view>
           <image  class="app_noinfo_img" src="../../images/nodata.png" mode="widthFix"></image>
           <view class="app_noinfo_desc">{{tip}}</view>
         </view>
@@ -139,5 +95,6 @@
           <view class="app_noinfo_desc">{{tip_temp}}</view>
         </view>
       </view>
+
     </view>
   </view>

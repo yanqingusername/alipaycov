@@ -40,12 +40,19 @@
       return param
   }
   
-
+  function contentTrim(params){
+    if (!params) {  
+    return " ";
+    }
+    var param = params.replace(getRegExp('<br/>','g'), '  ');
+    return param;
+  }
 
   export default{
     subStringName: subStringName,
     monthString: monthString,
     timeString: timeString,
     centerPhoneTrim: centerPhoneTrim,
-    centerIdCardTrim: centerIdCardTrim
+    centerIdCardTrim: centerIdCardTrim,
+    contentTrim: contentTrim
 }

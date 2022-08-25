@@ -9,11 +9,15 @@ var request = require("../../utils/request.js");
 var box = require("../../utils/box.js");
 
 const utils = require("../../utils/utils.js");
-
 var a_channel_id_plus;
 var a_channel_id;
 var a_channel_id_plus_old;
 var a_channel_id_old;
+
+var a_channel_id_map;
+var a_channel_id_old_map;
+var a_channel_id_plus_map;
+var a_channel_id_plus_old_map;
 
 _Page({
   /**
@@ -26,7 +30,7 @@ _Page({
     overflowFlag: false,
     TabCur: 0,
     status: 0,
-   channelListPlusOld:[],//采样点列表（最开始数据）
+    channelListPlusOld:[],//采样点列表（最开始数据）
     channelListOld:[],//采样点列表（最开始数据）
     channelList: [],       //采样点列表（未模糊查询）
     channelListPlus:[], 
@@ -134,7 +138,7 @@ _Page({
   gettagList: function (e) {
   var that = this
   var data = {
-    isbig: 0
+    isbig: 1
   }
   request.request_get('/Newacid/gettagList.hn', data, function (res) {
     console.info('回调', res)
@@ -284,7 +288,7 @@ _Page({
                 overflowFlag:false
               });
 
-              if(that.data.searchText || that.data.lableid || that.data.isbigscreen){
+              if(that.data.searchText || that.data.lableid || that.data.isbigscreen || that.data.yingye){
                 if(that.data.channelList.length == 0){
                   that.setData({
                     tip: '没有搜索到该采样点',
@@ -414,7 +418,7 @@ _Page({
                 overflowFlag:false
               });
 
-              if(that.data.searchText || that.data.lableid || that.data.isbigscreen){
+              if(that.data.searchText || that.data.lableid || that.data.isbigscreen || that.data.yingye){
                 if(that.data.channelList.length == 0){
                   that.setData({
                     tip: '没有搜索到该采样点',
@@ -625,33 +629,17 @@ _Page({
   },
   //选中采样点并返回
   bindCheckSamplingPoint: function(e) {
-    console.log(e);
-    let pages = getCurrentPages();
-    let prevPage = pages[pages.length - 2];
     var channel_name1 = e.currentTarget.dataset.name;
     var distance1 = e.currentTarget.dataset.distance;
     var id1 = e.currentTarget.dataset.id;
-    let paytypetexts = e.currentTarget.dataset.paytypetexts || [];
-    let typeid = -1;
-       if(paytypetexts.length > 0){
-        typeid = paytypetexts[0].id;
-       }
-    var channel = {
-      channel_name: channel_name1,
-      distance: distance1,
-      channel_id: id1
-    };
-    console.log(channel);
-    // prevPage.setData({
-    //   channel: channel,
-    //   bindBackFlag: true
-    // });
-    prevPage.data.channel =  channel;
-    prevPage.data.typeid = typeid;
-    prevPage.data.bindBackFlag = true;
-    _my.navigateBack({
-      delta: 1
-    });
+    let typeid = e.currentTarget.dataset.typeid;
+    var channel ={channel_name:channel_name1,distance:distance1,channel_id:id1}; 
+    let jsonItem = JSON.stringify(channel);
+    if(channel_name1 && distance1 && id1){
+          _my.redirectTo({
+            url: `/pages/onsiteAppointment/onsiteAppointment?choMap=1&channel=${jsonItem}&choose_type=0&fix_channel_id=-1&typeid=${typeid}`,
+          })
+        }
   },
 
   // 输入框有文字时，点击X清除
@@ -719,21 +707,21 @@ _Page({
           //   a_channel_id_old = channel_id;
           // }else{
 
-            // for(let i = 0; i < channelListOld.length; i++){
-            //   if(this.data.channelListOld[i].yingye == 0){
-            //     this.data.channelListOld[i].iconPath = '../../images/icon_position_02.png';
+            // for(let i = 0; i < channelList.length; i++){
+            //   if(this.data.channelList[i].yingye == 0){
+            //     this.data.channelList[i].iconPath = '../../images/icon_position_02.png';
             //   }else{
-            //     this.data.channelListOld[i].iconPath = '../../images/icon_position_04.png';
+            //     this.data.channelList[i].iconPath = '../../images/icon_position_04.png';
             //   }
-            //   this.data.channelListOld[i].width = 30;
-            //   this.data.channelListOld[i].height = 30;
-            //   this.data.channelListOld[i].zIndex = 0;
+            //   this.data.channelList[i].width = 30;
+            //   this.data.channelList[i].height = 30;
+            //   this.data.channelList[i].zIndex = 0;
             // }
 
             // this.setData({
-            //   channelList: this.data.channelListOld,
+            //   channelList: this.data.channelList,
             //   isFirst: 1,
-            //   channelListOld: this.data.channelListOld
+            //   // channelListOld: this.data.channelList
             // })
             a_channel_id_old = -1;
 
@@ -752,14 +740,14 @@ _Page({
               this.data.channelList[i].zIndex = 0;
             }
           }
-
+          
           if(this.data.channelList[index].yingye == 0){
             this.data.channelList[index].iconPath = '../../images/icon_position_03.png';
           }else{
             this.data.channelList[index].iconPath = '../../images/icon_position_01.png';
           }
-          this.data.channelList[index].width = 45;
-          this.data.channelList[index].height = 45;
+          this.data.channelList[index].width = 35;
+          this.data.channelList[index].height = 35;
           this.data.channelList[index].zIndex = 9999;
 
           // 新增
@@ -843,14 +831,14 @@ _Page({
     //           this.data.channelListPlusOld[i].zIndex = 0;
     //         }
     //       }
-
+          
     //       if(this.data.channelListPlusOld[index].yingye == 0){
     //         this.data.channelListPlusOld[index].iconPath = '../../images/icon_position_03.png';
     //       }else{
     //         this.data.channelListPlusOld[index].iconPath = '../../images/icon_position_01.png';
     //       }
-    //       this.data.channelListPlusOld[index].width = 45;
-    //       this.data.channelListPlusOld[index].height = 45;
+    //       this.data.channelListPlusOld[index].width = 35;
+    //       this.data.channelListPlusOld[index].height = 35;
     //       this.data.channelListPlusOld[index].zIndex = 9999;
 
     //       this.setData({
@@ -893,20 +881,20 @@ _Page({
     // let channelListOld = this.data.channelListOld;
     //   if(channelListOld){
     //     for(let i = 0; i < channelListOld.length; i++){
-    //         if(this.data.channelListOld[i].yingye == 0){
-    //           this.data.channelListOld[i].iconPath = '../../images/icon_position_02.png';
-    //         }else{
-    //           this.data.channelListOld[i].iconPath = '../../images/icon_position_04.png';
-    //         }
-    //         this.data.channelListOld[i].width = 30;
-    //         this.data.channelListOld[i].height = 30;
+    //       if(this.data.channelListOld[i].yingye == 0){
+    //         this.data.channelListOld[i].iconPath = '../../images/icon_position_02.png';
+    //       }else{
+    //         this.data.channelListOld[i].iconPath = '../../images/icon_position_04.png';
+    //       }
+    //       this.data.channelListOld[i].width = 30;
+    //       this.data.channelListOld[i].height = 30;
     //         this.data.channelListOld[i].zIndex = 0;
     //     }
     //     this.setData({
     //       channelListOld: this.data.channelListOld
     //     });
     //   }
-    
+
       // this.setData({
       //   channelListPlusOld: []
       // });
@@ -915,6 +903,172 @@ _Page({
       a_channel_id = -1;
       a_channel_id_plus_old = -1;
       a_channel_id_old = -1;
+
+      a_channel_id_map = -1;
+      a_channel_id_old_map = -1;
+      a_channel_id_plus_map = -1;
+      a_channel_id_plus_old_map = -1;
+  },
+  bindCheckMap(e){
+    console.log(e.currentTarget.dataset.latitude,e.currentTarget.dataset.longitude)
+    
+    // if(this.data.flag1){
+      let channel_id = e.currentTarget.dataset.id;
+      if(channel_id){
+        a_channel_id = channel_id;
+        let channelList = this.data.channelList;
+        let channelData = [];
+        let index = -1;
+        if(channelList && channelList.length > 0){
+          for(let i = 0; i < channelList.length; i++){
+            if(channelList[i].channel_id == channel_id){
+              channelData.push(channelList[i]);
+              index = i;
+            }
+          }
+        }
+
+        if(a_channel_id == a_channel_id_old){
+            // for(let i = 0; i < channelList.length; i++){
+            //   if(this.data.channelList[i].yingye == 0){
+            //     this.data.channelList[i].iconPath = '../../images/icon_position_02.png';
+            //   }else{
+            //     this.data.channelList[i].iconPath = '../../images/icon_position_04.png';
+            //   }
+            //   this.data.channelList[i].width = 30;
+            //   this.data.channelList[i].height = 30;
+            //   this.data.channelList[i].zIndex = 0;
+            // }
+
+            // this.setData({
+            //   channelList: this.data.channelList,
+            //   // channelListOld: this.data.channelListOld
+            // })
+            a_channel_id_old = -1;
+
+            this.getChannelList();
+          
+        }else{
+          this.setData({
+            latitude: e.currentTarget.dataset.latitude,
+            longitude: e.currentTarget.dataset.longitude
+          })
+
+          for(let i = 0; i < channelList.length; i++){
+            if(channelList[i].channel_id == a_channel_id_old){
+              if(this.data.channelList[i].yingye == 0){
+                this.data.channelList[i].iconPath = '../../images/icon_position_02.png';
+              }else{
+                this.data.channelList[i].iconPath = '../../images/icon_position_04.png';
+              }
+              this.data.channelList[i].width = 30;
+              this.data.channelList[i].height = 30;
+              this.data.channelList[i].zIndex = 0;
+            }
+          }
+
+          if(this.data.channelList[index].yingye == 0){
+            this.data.channelList[index].iconPath = '../../images/icon_position_03.png';
+          }else{
+            this.data.channelList[index].iconPath = '../../images/icon_position_01.png';
+          }
+          this.data.channelList[index].width = 35;
+          this.data.channelList[index].height = 35;
+          this.data.channelList[index].zIndex = 9999;
+
+
+          // 新增
+          if(channelData && channelData.length > 0){
+            channelData[0].label = {
+              content: channelData[0].channel_name,
+              color: '#0F66F7',
+              fontSize: 14,
+              borderWidth: 2,
+              borderRadius: 10,
+              borderColor: '#fff',
+              bgColor: '#fff',
+              padding: 5,
+              display: 'ALWAYS',
+              textAlign: 'center'
+            }
+          }
+
+          this.setData({
+            channelList: channelData,
+            // channelListOld: this.data.channelListOld
+          })
+          a_channel_id_old = channel_id;
+        }
+      }
+    // }else{
+    //   let channel_id = e.currentTarget.dataset.id;
+    //   if(channel_id){
+    //     a_channel_id_plus = channel_id;
+    //     let channelListPlusOld = this.data.channelListPlusOld;
+    //     let channelData = [];
+    //     let index = -1;
+    //     if(channelListPlusOld && channelListPlusOld.length > 0){
+    //       for(let i = 0; i < channelListPlusOld.length; i++){
+    //         if(channelListPlusOld[i].channel_id == channel_id){
+    //           channelData.push(channelListPlusOld[i]);
+    //           index = i;
+    //         }
+    //       }
+    //     }
+    //     if(a_channel_id_plus == a_channel_id_plus_old){
+            // for(let i = 0; i < channelListPlusOld.length; i++){
+            //   if(this.data.channelListPlusOld[i].yingye == 0){
+            //     this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_02.png';
+            //   }else{
+            //     this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_04.png';
+            //   }
+            //   this.data.channelListPlusOld[i].width = 30;
+            //   this.data.channelListPlusOld[i].height = 30;
+            //   this.data.channelListPlusOld[i].zIndex = 0;
+            // }
+    //         this.setData({
+    //           // channelListPlus: this.data.channelListPlusOld,
+    //           channelListPlusOld: this.data.channelListPlusOld
+    //         });
+    //         a_channel_id_plus_old = -1;
+          
+    //     }else{
+    //       this.setData({
+    //         latitude: e.currentTarget.dataset.latitude,
+    //         longitude: e.currentTarget.dataset.longitude
+    //       })
+          
+    //       for(let i = 0; i < channelListPlusOld.length; i++){
+    //         if(channelListPlusOld[i].channel_id == a_channel_id_plus_old){
+      // if(this.data.channelListPlusOld[i].yingye == 0){
+      //   this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_02.png';
+      // }else{
+      //   this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_04.png';
+      // }
+      // this.data.channelListPlusOld[i].width = 30;
+      // this.data.channelListPlusOld[i].height = 30;
+      // this.data.channelListPlusOld[i].zIndex = 0;
+    //         }
+    //       }
+          
+          // if(this.data.channelListPlusOld[index].yingye == 0){
+          //   this.data.channelListPlusOld[index].iconPath = '../../images/icon_position_03.png';
+          // }else{
+          //   this.data.channelListPlusOld[index].iconPath = '../../images/icon_position_01.png';
+          // }
+          // this.data.channelListPlusOld[index].width = 35;
+          // this.data.channelListPlusOld[index].height = 35;
+          // this.data.channelListPlusOld[index].zIndex = 9999;
+
+
+    //       this.setData({
+    //         // channelListPlus: channelData,
+    //         channelListPlusOld: this.data.channelListPlusOld
+    //       });
+    //       a_channel_id_plus_old = channel_id;
+    //     }
+    //   }
+    // }
   },
   bindLable(e){
     let lableIndex = e.currentTarget.dataset.lableindex;

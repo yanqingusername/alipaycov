@@ -24,7 +24,10 @@ _Page({
     canIUseGetUserProfile: false,
     canIUseOpenData:
       _my.canIUse("open-data.type.userAvatarUrl") &&
-      _my.canIUse("open-data.type.userNickName") // 如需尝试获取用户信息可改为false
+      _my.canIUse("open-data.type.userNickName"), // 如需尝试获取用户信息可改为false
+    main_title: '卡尤迪新冠肺炎核酸检测',
+    main_type_time: '12小时内出报告',
+    main_type_text: '91个核酸检测采样点位，看地图'
   },
   onShow: function() {
     var that = this;
@@ -41,6 +44,9 @@ _Page({
     // }); // 获取微信小程序配置
     // 登录小程序
     that.loginApp();
+
+    that.getNoticeList();
+    this.getMainIndex();
   },
   // 获取微信code登录小程序
   loginApp: function() {
@@ -231,5 +237,114 @@ _Page({
         url: "/pages/index/article"
       });
     }
-  }
+  },
+  /**
+   * 采样点地图
+   */
+  bindChooseMap: function () {
+    _my.navigateTo({
+      url: '/pages/chooseSamplingPointMap/index',
+    })
+  },
+  /**
+   * 防疫政策
+   */
+  bindEpidemicPreventionPolicy: function () {
+    _my.navigateTo({
+      url: "/pages/epidemicPreventionPolicy/index"
+    })
+  },
+  /**
+   * 新冠自检
+   */
+  bindXinguanSelfInspection: function () {
+    _my.navigateTo({
+      url: "/pages/xinguanSelfInspection/index"
+    })
+  },
+  /**
+   *  公告
+   */
+  bindNoticeClick(e) {
+    let item = e.currentTarget.dataset.item;
+    console.log('---->:', item)
+
+    let open_way= item.open_way
+    let icon= item.herf
+    let typestring = item.type;
+
+    // 待采样
+    if(typestring == 0){
+      let herf = item.herf;
+      let appointment_num = item.appointment_num;
+      if(herf && appointment_num) {
+        _my.navigateTo({
+          url: herf + '?appointment_num='+appointment_num+"&onlineFlagNum="
+        });
+      }
+    } else if(typestring == 1){
+      // 超时
+      let herf = item.herf;
+      if(herf) {
+        _my.navigateTo({
+          url: herf + '?choose_type=0&fix_channel_id=-1'
+        });
+      }
+    } else {
+      if(open_way==0){
+        _my.navigateTo({
+          url: icon
+        })
+      }else if(open_way==1){
+        app.globalData.article = icon
+        _my.navigateTo({
+          url: '/pages/index/article?url='+icon
+        })
+      }else{
+        app.globalData.article = icon
+        _my.navigateTo({
+          url: '/pages/index/article'
+        })
+      }
+    }
+  },
+  /**
+   * 获取公告列表
+   */
+  getNoticeList() {
+    let that = this;
+    request.request_get('/Newacid/getNoticeList.hn', {
+      user_id: ''
+    }, function (res) {
+      if (res) {
+        if (res.success) {
+          that.setData({
+            noticeList: res.resList
+          });
+        } else {
+          box.showToast(res.msg);
+        }
+      } else {
+        box.showToast("网络不稳定，请重试");
+      }
+    });
+  },
+  /**
+   * 获取首页文案
+   */
+   getMainIndex: function () {
+    let that = this;
+    let data = {};
+    request.request_get('/newalipay/getMainIndex.hn', data, function (res) {
+      if (res) {
+        if (res.success) {
+          that.setData({
+            main_title: res.title,
+            main_type_text: res.type_text,
+            main_type_time: res.type_time
+          });
+        }
+      }
+    })
+  },
 });

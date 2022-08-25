@@ -17,7 +17,10 @@ _Page({
     dataList: []
   },
   onShow: function () {
-    this.getAllSubject();
+    let openid = app.globalData.openid;
+    if(openid){
+      this.getAllSubject();
+    }
   },
   onLoad: function (options) {
     _my.setNavigationBar({

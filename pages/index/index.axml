@@ -13,24 +13,88 @@
       <image src="../../images/bt_personalAppointment.png">
       </image>
     </view> -->
-    <view class="image_column">
+    <!-- <view class="image_column">
       <view onTap="bindOnsite" data-type="0" class="view_item">
         <image src="../../images/bt_personalAppointment.png" class="view_img"></image>
       </view>
-      <!-- <view hidden data-type="1" onTap="bindOnsite">
-        <image src="../../images/bt_checkRegister.png">
-        </image>
-      </view> -->
       <view onTap="bindAppointment"  class="view_item" style="padding: 0rpx 0rpx 20rpx 0rpx;">
         <image src="../../images/appointmentRecord.png" class="view_img"></image>
       </view>
+    </view> -->
+  <view class="main_view_item">
+    <view class="main_view1">
+      <view class="main_title">{{main_title}}</view>
+      <view class="main_title_1"><view class="main_radius_1"></view><view class="main_text">{{main_type_time}}</view></view>
+      <view class="main_title_2" onTap="bindChooseMap"><view class="main_radius_2"></view><view class="main_text">{{main_type_text}} ></view></view>
     </view>
-    <view id="coupon_bottom" onTap="bindCoupon">
-      <image style="width:58rpx;height:49rpx" src="../../images/coupon.png">
-      </image>
-      <view id="coupon_text">
-        我的卡券
+  </view>
+<view class="main_center">
+  <view class="main_center_left" onTap="bindOnsite" data-type="0">
+    <view class="main_1">现场录信息</view>
+    <view class="main_2">登记个人信息，排队采样</view>
+    <view class="main_3">马上预约</view>
+    <image src="../../images/icon_0701_07.png" class="main_7" />
+    <image src="../../images/icon_0701_08.png" class="main_8" />
+  </view>
+
+  <view class="main_center_right">
+    <view class="main_6" onTap="bindChooseMap">
+      <view class="main_1">搜索采样点</view>
+      <view class="main_2">社区，商圈，火车站</view>
+      <image src="../../images/icon_0701_09.png" class="main_9" />
+    </view>
+
+    <view class="main_11" onTap="bindAppointment">
+      <view class="main_1">预约记录</view>
+      <view class="main_2">我的信息码</view>
+      <image src="../../images/icon_0701_10.png" class="main_10" />
+    </view>
+  </view>
+
+
+</view>
+
+<!-- 公告 -->
+      <view style="margin: 30rpx 30rpx 0rpx 30rpx;">
+         <view class="notice_view1" >
+        <swiper class="swiper_zi" vertical="true" autoplay="true" circular="true" interval="3000">
+            <block a:for="{{noticeList}}" a:key="index">
+             <!-- catchtouchmove='catchTouchMove' -->
+            <swiper-item>
+                <view class="notice_left" data-item="{{item}}" >
+                  <image class="notice_left_img" src="../../images/icon_0701_11.png"></image>
+                  <view class="notice_left_title">{{item.headtext}}<text class="notice_left_text" a:if="{{item.text}}">“{{item.text}}”</text>{{item.tailtext}}</view>
+                </view>
+            </swiper-item>
+            </block>
+        </swiper>
+         </view>
       </view>
+
+      <view class="main_bottom">常用服务</view>
+
+      <view class="main_bottom_view">
+        <view class="bottom_view_1" catchTap="bindAppointment">
+          <image class="bottom_view_1_img" src="../../images/icon_0701_12.png"></image>
+          <view class="bottom_view_1_text">查询报告</view>
+
+        </view>
+        <view class="bottom_view_1" catchTap="bindEpidemicPreventionPolicy">
+          <image class="bottom_view_1_img" src="../../images/icon_0701_13.png"></image>
+          <view class="bottom_view_1_text">防疫政策</view>
+        </view>
+        <view class="bottom_view_1" catchTap="bindXinguanSelfInspection">
+          <image class="bottom_view_1_img" src="../../images/icon_0701_14.png"></image>
+          <view class="bottom_view_1_text">新冠自检</view>
+        </view>
+      </view>
+
+      <view class="empty_view"></view>
+
+    <view id="coupon_bottom" onTap="bindCoupon">
+      <image style="width:58rpx;height:49rpx;margin:0;" src="../../images/coupon.png"></image>
+      <view id="coupon_text">我的卡券</view>
     </view>
+    <view class="empty_view"></view>
   </view>
 </view>

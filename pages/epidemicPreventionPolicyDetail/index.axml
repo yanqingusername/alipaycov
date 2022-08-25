@@ -1,0 +1,36 @@
+<view class="policy_view"></view>
+
+<view class="page">
+  <view class="P1">
+      <view class="P2 app_font">
+        <view class="app_flex_new">
+          <view class="bold_font_new">{{policyTitle}}</view>
+          <view class="bold_font_2_new">{{policyType}}</view>
+          <view class="type_text_1">{{policyContent}}</view>
+        </view>
+        <view class="hr"></view>
+        <!-- <view class="P2_1 app_flex" style="padding: 14rpx 30rpx;margin: 0rpx;">
+          <view class="P2_1_1_1">{{policyText}}</view>
+        </view> -->
+        <view class="P2_1 app_flex" style="padding: 14rpx 30rpx;margin: 0rpx;" a:for="{{policyList}}" a:key="index">
+          <view class="P2_1_1" style="font-size: 32rpx;">{{item}}</view>
+        </view>
+      </view>
+  </view>
+
+  <view class="P1">
+      <view class="P2 app_font">
+        <view class="P2_1 app_flex" style="padding: 14rpx 30rpx;margin: 0rpx;">
+          <view class="P2_1_1_1">疫情防控咨询电话</view>
+        </view>
+
+        <view class="button_flex_new_between">
+          <view class="type_text_1">{{policyCity}}</view>
+          <view style="display: flex;" catchTap="phoneCall" data-policyphone="{{policyPhone}}">
+            <view class="type_text_2">{{policyPhone}}</view>
+          </view>
+        </view>
+        
+      </view>
+  </view>
+</view>

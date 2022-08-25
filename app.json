@@ -10,7 +10,11 @@
     "pages/chooseSamplingPoint/chooseSamplingPoint",
     "pages/onsiteAppointment/onsiteAppointment",
     "pages/addSubject/index",
-    "pages/selectSubject/index"
+    "pages/selectSubject/index",
+    "pages/epidemicPreventionPolicy/index",
+    "pages/epidemicPreventionPolicyDetail/index",
+    "pages/xinguanSelfInspection/index",
+    "pages/chooseSamplingPointMap/index"
   ],
   "plugins": {
     "subscribeMsg": {
