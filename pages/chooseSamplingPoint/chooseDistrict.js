@@ -25,7 +25,7 @@ _Page({
   getChannelDistrict() {
     var that = this;
     var data = {};
-    request.request_get("/alipay/getCountSamplingPoint.hn", data, function(res) {
+    request.request_get("/newalipay/getCountSamplingPoint.hn", data, function(res) {
       console.log("getChannelDistrict", res);
 
       if (res) {

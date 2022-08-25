@@ -120,7 +120,12 @@ _Page({
     can_use_new: 1,
     isXSH: 0, // 0 不显示  1 显示
     isShowXSH: false,
-    isShowCanUse: false
+    isShowCanUse: false,
+    is_promise: 2, //是否显示公告 1-显示  2-隐藏
+    showModal_4: false,
+    is_paynotice: 2,//是否显示付款须知 1-显示  2-隐藏
+    paynotice_title: '',
+    paynotice_url: '',
   },
   onLoad: function(options) {
     var that = this; // console.log(utils.checkAuditTime('09:00-12:00'));
@@ -166,7 +171,26 @@ _Page({
       });
       that.getFixedChannel(options.fix_channel_id); // 固定采样点
     } else {
-      that.getChannelList();
+      let choMap = options.choMap || 0;
+      if (choMap == 1) {
+        let jsonItem = options.channel;
+        let typeid = options.typeid;
+        let channel = JSON.parse(jsonItem);
+        console.log('---->:',channel)
+        that.setData({
+          channel: channel,
+          typeid: typeid
+        });
+        that.getFixedChannel(that.data.channel.channel_id); // 选中新采样点返回
+        console.log('选中新采样点返回')
+        var channel_id = that.data.channel.channel_id;
+        that.setData({
+          channel_id: channel_id,
+        })
+      }else{
+        that.getChannelList();
+      }
+      // that.getChannelList();
       console.log("小程序进入");
     }
   },
@@ -291,14 +315,37 @@ _Page({
             }
           }
 
+          let typeid = '';
+          let payment_amount = '';
+          let urgent = '';
+          let payment_text = '';
+          let payment_working_time = '';
+          if(that.data.typeid != -1){
+            for (var i = 0; i < detectionTypeArr.length; i++) {
+              if (that.data.typeid == detectionTypeArr[i].id) { //当前时间是否能做指定检测类型
+                 typeid = detectionTypeArr[i].id;
+                 payment_amount = detectionTypeArr[i].money;
+                 urgent = detectionTypeArr[i].urgent;
+                 payment_text = detectionTypeArr[i].text;
+                 payment_working_time = detectionTypeArr[i].working_time;
+              }
+            }
+          }else{
+             typeid = detectionTypeArr[0].id;
+             payment_amount = detectionTypeArr[0].money;
+             urgent = detectionTypeArr[0].urgent;
+             payment_text = detectionTypeArr[0].text;
+             payment_working_time = detectionTypeArr[0].working_time;
+          }
+
           that.setData({
             detectionTypeArr: detectionTypeArr,
-            typeid: detectionTypeArr[0].id,
-            payment_amount: detectionTypeArr[0].money,
-            urgent: detectionTypeArr[0].urgent,
-            payment_text: detectionTypeArr[0].text,
-            payment_working_time: detectionTypeArr[0].working_time
-          });
+            typeid: typeid,
+            payment_amount: payment_amount,
+            urgent: urgent,
+            payment_text: payment_text,
+            payment_working_time: payment_working_time,
+          })
           console.log(detectionTypeArr);
 
           if (that.data.coupon_payment == '不使用'||that.data.coupon_payment == '无') {
@@ -346,8 +393,7 @@ _Page({
           latitude: res.latitude,
           id: id
         };
-        request.request_get("/alipay/getSamplingPointById.hn", data, function(res) {
-          console.log("getFixedSamplingPoint", res);
+        request.request_get("/newalipay/getSamplingPointById1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {
@@ -358,7 +404,9 @@ _Page({
                 appointment_open: info.appointment_open,
                 channel_name: info.channel_name,
                 distance: info.distance,
-                working_time: info.working_time
+                working_time: info.working_time,
+                sbusiness_time1: info.sbusiness_time1,
+                xbusiness_time1: info.xbusiness_time1,
               };
               channel.distance = utils.setMorKm(channel.distance);
               var workingTimeArr = channel.working_time.split(",");
@@ -460,8 +508,7 @@ _Page({
         var data = {
           id: id
         };
-        request.request_get("/alipay/getSamplingPointById.hn", data, function(res) {
-          console.log("getFixedSamplingPoint", res);
+        request.request_get("/newalipay/getSamplingPointById1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {
@@ -472,7 +519,9 @@ _Page({
                 appointment_open: info.appointment_open,
                 channel_name: info.channel_name,
                 distance: "-m",
-                working_time: info.working_time
+                working_time: info.working_time,
+                sbusiness_time1: info.sbusiness_time1,
+                xbusiness_time1: info.xbusiness_time1,
               };
               var workingTimeArr = channel.working_time.split(",");
 
@@ -577,10 +626,10 @@ _Page({
         });
         var data = {
           longitude: res.longitude,
-          latitude: res.latitude
+          latitude: res.latitude,
+          tag: ''
         };
-        request.request_get("/alipay/getFixedSamplingPoint.hn", data, function(res) {
-          console.log("getFixedSamplingPoint", res);
+        request.request_get("/newalipay/getFixedSamplingPoint1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {
@@ -675,9 +724,12 @@ _Page({
 
       fail(res) {
         console.log("获取坐标失败");
-        var data = {};
-        request.request_get("/alipay/getFixedSamplingPoint.hn", data, function(res) {
-          console.log("getFixedSamplingPoint", res);
+        var data = {
+          tag: '',
+          longitude: 116.39772, // 默认天安门广场
+          latitude: 39.90323, // 默认天安门广场
+        };
+        request.request_get("/newalipay/getFixedSamplingPoint1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {
@@ -803,11 +855,13 @@ _Page({
 
               if (userinfo.gender == "男") {
                 that.setData({
-                  genderIndex: 0
+                  genderIndex: 0,
+                  gender: userinfo.gender
                 });
               } else if (userinfo.gender == "女") {
                 that.setData({
-                  genderIndex: 1
+                  genderIndex: 1,
+                  gender: userinfo.gender
                 });
               }
             }
@@ -1277,7 +1331,7 @@ _Page({
 
     if (choose_type == 0) {
       //TODO
-      request.request_get("/alipay/alipay.hn", data1, function(res) {
+      request.request_get("/newalipay/alipay.hn", data1, function(res) {
         console.info("回调", res);
 
         if (res) {
@@ -1306,7 +1360,7 @@ _Page({
                       let data = {
                         openid: app.globalData.openid
                       };
-                      request.request_get("/alipay/sendmsg.hn", data, function(
+                      request.request_get("/newalipay/sendmsg.hn", data, function(
                         res
                       ) {
                         console.info("回调", res);
@@ -1356,7 +1410,7 @@ _Page({
         verification_code: verification_code,
         // pay_channel: that.data.pay_channel //支付渠道
       };
-      request.request_get('/alipay/addMeituanPaymentOrder.hn', data2, function (res) {
+      request.request_get('/newalipay/addMeituanPaymentOrder.hn', data2, function (res) {
         console.info('回调', res)
         if (res) {
           if (res.success) {
@@ -1379,7 +1433,7 @@ _Page({
                 let data = {
                   openid: app.globalData.openid
                 };
-                request.request_get("/alipay/sendmsg.hn", data, function(res) {
+                request.request_get("/newalipay/sendmsg.hn", data, function(res) {
                         console.info("回调", res);
                 });
               },
@@ -2426,9 +2480,10 @@ _Page({
   getCheckTime(){
     let that = this;
     let data = {
-      test_type: that.data.typeid
+      test_type: that.data.typeid,
+      channel_id: that.data.channel.channel_id
     }
-    request.request_get('/a/is_during_business_hours.hn', data, function (res) {
+    request.request_get('/a/is_during_business_hours1.hn', data, function (res) {
       console.info('回调', res)
       if (res) {
           if (res.during_business_hours){

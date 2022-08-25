@@ -137,8 +137,7 @@ _Page({
           latitude: res.latitude,
           sampling_place: sampling_place
         };
-        request.request_get("/alipay/getFixedSamplingPoint.hn", data, function(res) {
-          console.log("getFixedSamplingPoint", res);
+        request.request_get("/newalipay/getFixedSamplingPoint1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {
@@ -231,8 +230,7 @@ _Page({
         var data = {
           sampling_place: sampling_place
         };
-        request.request_get("/alipay/getFixedSamplingPoint.hn", data, function(res) {
-          console.log("getFixedSamplingPoint", res);
+        request.request_get("/newalipay/getFixedSamplingPoint1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {

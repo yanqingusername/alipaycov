@@ -50,7 +50,7 @@ _Page({
         var authcode = res.authCode;
         console.log("获取code成功" + authcode);
         request.request_get(
-          "/alipay/enterProgram.hn",
+          "/newalipay/enterProgram.hn",
           {
             authcode: authcode
           },
