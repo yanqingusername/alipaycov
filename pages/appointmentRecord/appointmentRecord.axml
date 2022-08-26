@@ -1,3 +1,4 @@
+<import-sjs from="../../utils/substring.sjs" name="tools"></import-sjs>
 <view class='page-container-classname'>
   
   <view class="search_border">
@@ -64,7 +65,7 @@
               手机号
             </view>
             <view class="P2_1_2">
-              {{item.phone}}
+              {{tools.centerPhoneTrim1(item.phone)}}
             </view>
           </view>
           <view class="button_flex_new">
@@ -127,7 +128,7 @@
               手机号
             </view>
             <view class="P2_1_2">
-              {{item.phone}}
+              {{tools.centerPhoneTrim1(item.phone)}}
             </view>
           </view>
           <view class="button_flex_new" data-report="{{item.pdf_url}}" data-appointmentnum="{{item.appointment_num}}">

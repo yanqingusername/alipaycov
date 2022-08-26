@@ -48,11 +48,46 @@
     return param;
   }
 
+  function centerPhoneTrim1(params){
+    if (!params) {  // 18798799876
+    return ""
+    }
+    var param = params.replace(params.substring(3,params.length-4),'****')
+    var param1 = param.replace(getRegExp('(\d{3})(.*)(\d{4})','g'), '$1 $2 $3')
+      return param1
+  }
+
+  function centerIdCardTrim1(params){
+    if (!params) {
+    return ""
+    }
+
+    var param1;
+    if(params.length == 18){
+      var param = params.replace(params.substring(6,params.length-4),'********')
+      param1 = param.replace(getRegExp('(.{6})(.*)(.{4})','g'), '$1 $2 $3')
+    } else if(params.length == 16){
+      var param2 = params.replace(params.substring(6,params.length-4),'******')
+      param1 = param2.replace(getRegExp('(.{6})(.*)(.{4})','g'), '$1 $2 $3')
+    } else if(params.length == 20){
+      var param3 = params.replace(params.substring(6,params.length-4),'**********')
+      param1 = param3.replace(getRegExp('(.{6})(.*)(.{4})','g'), '$1 $2 $3')
+    } else {
+      var param4 = '*****' + params.substring(params.length - 4);
+      param1 = param4.replace(getRegExp('(.{5})(.{4})','g'), '$1 $2')
+    }
+    
+    
+      return param1
+  }
+
   export default{
     subStringName: subStringName,
     monthString: monthString,
     timeString: timeString,
     centerPhoneTrim: centerPhoneTrim,
     centerIdCardTrim: centerIdCardTrim,
-    contentTrim: contentTrim
+    contentTrim: contentTrim,
+    centerPhoneTrim1: centerPhoneTrim1,
+    centerIdCardTrim1: centerIdCardTrim1
 }

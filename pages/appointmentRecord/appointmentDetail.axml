@@ -1,3 +1,4 @@
+<import-sjs from="../../utils/substring.sjs" name="tools"></import-sjs>
 <view class='page-container-classname'>
   
   <view class="page" style="background-color:#F6F6F6;">
@@ -83,7 +84,7 @@
             证件号
           </view>
           <view class="P2_1_2">
-            {{id_card}}
+            {{tools.centerIdCardTrim1(id_card)}}
           </view>
         </view>
         <view class="P2_1 app_flex">
@@ -91,7 +92,7 @@
             手机号
           </view>
           <view class="P2_1_2">
-            {{phone}}
+            {{tools.centerPhoneTrim1(phone)}}
           </view>
         </view>
         <view class="P2_1 app_flex">
