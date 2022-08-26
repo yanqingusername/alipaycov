@@ -725,23 +725,46 @@ _Page({
       box.showToast('用户服务协议不存在，请联系客服')
       return;
     }
-    _my.downloadFile({
-      url: report_temp, //要预览的PDF的地址
-      // filePath: my.env.USER_DATA_PATH + '/预约须知.pdf',
-      success({ apFilePath }) {
-        _my.openDocument({
-          filePath: apFilePath,
-          fileType: "pdf",
-          success: res => {
-            console.log("打开用户服务协议成功");
+
+    const fs = my.getFileSystemManager();
+    my.downloadFile({
+      // 示例 url，并非真实存在
+      url: report_temp,
+      success(res) {
+        fs.saveFile({
+          tempFilePath: res.apFilePath,
+          filePath: `${my.env.USER_DATA_PATH}/用户服务协议.pdf`,
+          success(res1) {
+            my.openDocument({
+              filePath: res1.savedFilePath,
+              fileType: 'pdf',
+            })
           }
-        });
+        })
       },
       fail: res => {
         box.showToast("用户服务协议不存在，请联系客服");
         console.log(res); //失败
       }
     });
+
+    // _my.downloadFile({
+    //   url: report_temp, //要预览的PDF的地址
+    //   // filePath: my.env.USER_DATA_PATH + '/用户服务协议.pdf',
+    //   success({ apFilePath }) {
+    //     _my.openDocument({
+    //       filePath: apFilePath,
+    //       fileType: "pdf",
+    //       success: res => {
+    //         console.log("打开用户服务协议成功");
+    //       }
+    //     });
+    //   },
+    //   fail: res => {
+    //     box.showToast("用户服务协议不存在，请联系客服");
+    //     console.log(res); //失败
+    //   }
+    // });
   }, 2000),
   bindPrivacyPolicy: utils.throttle(function (e) {
     var report_temp = this.data.yszz_url
@@ -749,23 +772,46 @@ _Page({
       box.showToast('隐私政策不存在，请联系客服')
       return;
     }
-    _my.downloadFile({
-      url: report_temp, //要预览的PDF的地址
-      // filePath: my.env.USER_DATA_PATH + '/隐私政策.pdf',
-      success({ apFilePath }) {
-        _my.openDocument({
-          filePath: apFilePath,
-          fileType: "pdf",
-          success: res => {
-            console.log("打开用户服务协议成功");
+
+    const fs = my.getFileSystemManager();
+    my.downloadFile({
+      // 示例 url，并非真实存在
+      url: report_temp,
+      success(res) {
+        fs.saveFile({
+          tempFilePath: res.apFilePath,
+          filePath: `${my.env.USER_DATA_PATH}/隐私政策.pdf`,
+          success(res1) {
+            my.openDocument({
+              filePath: res1.savedFilePath,
+              fileType: 'pdf',
+            })
           }
-        });
+        })
       },
       fail: res => {
         box.showToast("隐私政策不存在，请联系客服");
         console.log(res); //失败
       }
     });
+
+    // _my.downloadFile({
+    //   url: report_temp, //要预览的PDF的地址
+    //   // filePath: my.env.USER_DATA_PATH + '/隐私政策.pdf',
+    //   success({ apFilePath }) {
+    //     _my.openDocument({
+    //       filePath: apFilePath,
+    //       fileType: "pdf",
+    //       success: res => {
+    //         console.log("打开用户服务协议成功");
+    //       }
+    //     });
+    //   },
+    //   fail: res => {
+    //     box.showToast("隐私政策不存在，请联系客服");
+    //     console.log(res); //失败
+    //   }
+    // });
   }, 2000),
   getbaseData: function () {
     let that = this;

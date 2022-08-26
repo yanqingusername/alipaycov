@@ -2072,23 +2072,45 @@ _Page({
       return;
     }
 
+    const fs = my.getFileSystemManager();
     my.downloadFile({
-      url: report_temp, //要预览的PDF的地址
-      // filePath: my.env.USER_DATA_PATH + '/预约须知.pdf',
-      success({ apFilePath }) {
-        my.openDocument({
-          filePath: apFilePath,
-          fileType: "pdf",
-          success: res => {
-            console.log("打开预约须知成功");
+      // 示例 url，并非真实存在
+      url: report_temp,
+      success(res) {
+        fs.saveFile({
+          tempFilePath: res.apFilePath,
+          filePath: `${my.env.USER_DATA_PATH}/预约须知.pdf`,
+          success(res1) {
+            my.openDocument({
+              filePath: res1.savedFilePath,
+              fileType: 'pdf',
+            })
           }
-        });
+        })
       },
       fail: res => {
         box.showToast("预约须知不存在，请联系客服");
         console.log(res); //失败
       }
     });
+
+    // my.downloadFile({
+    //   url: report_temp, //要预览的PDF的地址
+    //   // filePath: my.env.USER_DATA_PATH + '/预约须知.pdf',
+    //   success({ apFilePath }) {
+    //     my.openDocument({
+    //       filePath: apFilePath,
+    //       fileType: "pdf",
+    //       success: res => {
+    //         console.log("打开预约须知成功");
+    //       }
+    //     });
+    //   },
+    //   fail: res => {
+    //     box.showToast("预约须知不存在，请联系客服");
+    //     console.log(res); //失败
+    //   }
+    // });
   }, 2000),
   bindUserProtocol: utils.throttle(function(e) {
     var report_temp = this.data.fwxy_url;
