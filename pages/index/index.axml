@@ -84,18 +84,23 @@
           <image class="bottom_view_1_img" src="../../images/icon_0701_13.png"></image>
           <view class="bottom_view_1_text">防疫政策</view>
         </view>
-        <view class="bottom_view_1" catchTap="bindXinguanSelfInspection">
+        <!-- <view class="bottom_view_1" catchTap="bindXinguanSelfInspection">
           <image class="bottom_view_1_img" src="../../images/icon_0701_14.png"></image>
           <view class="bottom_view_1_text">新冠自检</view>
+        </view> -->
+
+        <view class="bottom_view_1" catchTap="bindCoupon">
+          <image class="bottom_view_1_img" src="../../images/icon_08_26_01.png"></image>
+          <view class="bottom_view_1_text">我的卡券</view>
         </view>
       </view>
 
       <view class="empty_view"></view>
 
-    <view id="coupon_bottom" onTap="bindCoupon">
+    <!-- <view id="coupon_bottom" onTap="bindCoupon">
       <image style="width:58rpx;height:49rpx;margin:0;" src="../../images/coupon.png"></image>
       <view id="coupon_text">我的卡券</view>
     </view>
-    <view class="empty_view"></view>
+    <view class="empty_view"></view> -->
   </view>
 </view>
