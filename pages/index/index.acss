@@ -95,7 +95,7 @@ image {
 }
 
 .main_title{
-  font-size: 42rpx;
+  font-size: 38rpx;
   font-family: PingFangSC-Semibold, PingFang SC;
   font-weight: 600;
   color: #FFFFFF;
@@ -139,8 +139,8 @@ color: #FFFFFF;
   height: 326rpx;
     width: 228rpx;
     position: absolute;
-    right: 24rpx;
-    bottom: 90rpx;
+    right: 26rpx;
+    bottom: 0rpx;
 }
 
 .main_center{

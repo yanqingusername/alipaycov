@@ -23,7 +23,7 @@
       </scroll-view>
     </view>
   </view>
-  <view class="page {{overflowFlag==true?'active':''}}" style="position:absolute;">
+  <view class="page {{overflowFlag==true?'active':''}}">
     <view class="P1" style="margin-top:230rpx">
       <block a:if="{{flag1 || flag2 }}">
         <view style="height:552rpx;"  a:if="{{flag1 || flag2}}">

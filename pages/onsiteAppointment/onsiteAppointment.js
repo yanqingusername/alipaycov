@@ -2073,7 +2073,8 @@ _Page({
     }
 
     my.downloadFile({
-      url: report_temp,
+      url: report_temp, //要预览的PDF的地址
+      // filePath: my.env.USER_DATA_PATH + '/预约须知.pdf',
       success({ apFilePath }) {
         my.openDocument({
           filePath: apFilePath,

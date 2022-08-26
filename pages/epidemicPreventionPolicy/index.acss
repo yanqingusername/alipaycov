@@ -33,6 +33,7 @@ page{
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   word-break:break-all;
+  line-height: initial;
 }
 
 .img {

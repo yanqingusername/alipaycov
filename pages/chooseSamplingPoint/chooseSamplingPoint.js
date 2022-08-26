@@ -268,9 +268,9 @@ _Page({
 
                 channelList[i].id = parseInt(channelList[i].channel_id);
                 if(channelList[i].yingye == 0){
-                  channelList[i].iconPath = '../../images/icon_position_02.png';
+                  channelList[i].iconPath = '/pages/image/icon_position_02.png';
                 }else{
-                  channelList[i].iconPath = '../../images/icon_position_04.png';
+                  channelList[i].iconPath = '/pages/image/icon_position_04.png';
                 }
                 channelList[i].width = 30;
                 channelList[i].height = 30;
@@ -309,8 +309,8 @@ _Page({
 
       fail(res) {
         that.setData({
-        longitude: wx.getStorageSync('longitude') || that.data.longitude,
-        latitude: wx.getStorageSync('latitude') || that.data.latitude
+        longitude: _my.getStorageSync('longitude') || that.data.longitude,
+        latitude: _my.getStorageSync('latitude') || that.data.latitude
       });
         console.log(res);
         var data = {
@@ -397,9 +397,9 @@ _Page({
                 channelList[i].id = parseInt(channelList[i].channel_id);
 
                 if(channelList[i].yingye == 0){
-                  channelList[i].iconPath = '../../images/icon_position_02.png';
+                  channelList[i].iconPath = '/pages/image/icon_position_02.png';
                 }else{
-                  channelList[i].iconPath = '../../images/icon_position_04.png';
+                  channelList[i].iconPath = '/pages/image/icon_position_04.png';
                 }
                 channelList[i].width = 30;
                 channelList[i].height = 30;
@@ -721,9 +721,9 @@ _Page({
 
             // for(let i = 0; i < channelListOld.length; i++){
             //   if(this.data.channelListOld[i].yingye == 0){
-            //     this.data.channelListOld[i].iconPath = '../../images/icon_position_02.png';
+            //     this.data.channelListOld[i].iconPath = '/pages/image/icon_position_02.png';
             //   }else{
-            //     this.data.channelListOld[i].iconPath = '../../images/icon_position_04.png';
+            //     this.data.channelListOld[i].iconPath = '/pages/image/icon_position_04.png';
             //   }
             //   this.data.channelListOld[i].width = 30;
             //   this.data.channelListOld[i].height = 30;
@@ -743,9 +743,9 @@ _Page({
           for(let i = 0; i < channelList.length; i++){
             if(channelList[i].channel_id == a_channel_id_old){
               if(this.data.channelList[i].yingye == 0){
-                this.data.channelList[i].iconPath = '../../images/icon_position_02.png';
+                this.data.channelList[i].iconPath = '/pages/image/icon_position_02.png';
               }else{
-                this.data.channelList[i].iconPath = '../../images/icon_position_04.png';
+                this.data.channelList[i].iconPath = '/pages/image/icon_position_04.png';
               }
               this.data.channelList[i].width = 30;
               this.data.channelList[i].height = 30;
@@ -754,9 +754,9 @@ _Page({
           }
 
           if(this.data.channelList[index].yingye == 0){
-            this.data.channelList[index].iconPath = '../../images/icon_position_03.png';
+            this.data.channelList[index].iconPath = '/pages/image/icon_position_03.png';
           }else{
-            this.data.channelList[index].iconPath = '../../images/icon_position_01.png';
+            this.data.channelList[index].iconPath = '/pages/image/icon_position_01.png';
           }
           this.data.channelList[index].width = 45;
           this.data.channelList[index].height = 45;
@@ -815,9 +815,9 @@ _Page({
 
     //         for(let i = 0; i < channelListPlusOld.length; i++){
     //           if(this.data.channelListPlusOld[i].yingye == 0){
-    //             this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_02.png';
+    //             this.data.channelListPlusOld[i].iconPath = '/pages/image/icon_position_02.png';
     //           }else{
-    //             this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_04.png';
+    //             this.data.channelListPlusOld[i].iconPath = '/pages/image/icon_position_04.png';
     //           }
     //           this.data.channelListPlusOld[i].width = 30;
     //           this.data.channelListPlusOld[i].height = 30;
@@ -834,9 +834,9 @@ _Page({
     //       for(let i = 0; i < channelListPlusOld.length; i++){
     //         if(channelListPlusOld[i].channel_id == a_channel_id_plus_old){
     //           if(this.data.channelListPlusOld[i].yingye == 0){
-    //             this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_02.png';
+    //             this.data.channelListPlusOld[i].iconPath = '/pages/image/icon_position_02.png';
     //           }else{
-    //             this.data.channelListPlusOld[i].iconPath = '../../images/icon_position_04.png';
+    //             this.data.channelListPlusOld[i].iconPath = '/pages/image/icon_position_04.png';
     //           }
     //           this.data.channelListPlusOld[i].width = 30;
     //           this.data.channelListPlusOld[i].height = 30;
@@ -845,9 +845,9 @@ _Page({
     //       }
 
     //       if(this.data.channelListPlusOld[index].yingye == 0){
-    //         this.data.channelListPlusOld[index].iconPath = '../../images/icon_position_03.png';
+    //         this.data.channelListPlusOld[index].iconPath = '/pages/image/icon_position_03.png';
     //       }else{
-    //         this.data.channelListPlusOld[index].iconPath = '../../images/icon_position_01.png';
+    //         this.data.channelListPlusOld[index].iconPath = '/pages/image/icon_position_01.png';
     //       }
     //       this.data.channelListPlusOld[index].width = 45;
     //       this.data.channelListPlusOld[index].height = 45;
@@ -870,7 +870,7 @@ _Page({
     //   });
 
     //   // 显示遮罩层
-    //   var animation = wx.createAnimation({
+    //   var animation = _my.createAnimation({
     //     duration: 200,
     //     timingFunction: "linear",
     //     delay: 0
@@ -894,9 +894,9 @@ _Page({
     //   if(channelListOld){
     //     for(let i = 0; i < channelListOld.length; i++){
     //         if(this.data.channelListOld[i].yingye == 0){
-    //           this.data.channelListOld[i].iconPath = '../../images/icon_position_02.png';
+    //           this.data.channelListOld[i].iconPath = '/pages/image/icon_position_02.png';
     //         }else{
-    //           this.data.channelListOld[i].iconPath = '../../images/icon_position_04.png';
+    //           this.data.channelListOld[i].iconPath = '/pages/image/icon_position_04.png';
     //         }
     //         this.data.channelListOld[i].width = 30;
     //         this.data.channelListOld[i].height = 30;

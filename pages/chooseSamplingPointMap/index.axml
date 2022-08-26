@@ -1,3 +1,4 @@
+<view>
   <view class="search_border">
     <view class="search">
       <view class="search_left" onTap="chooseDistrict">
@@ -22,7 +23,7 @@
       </scroll-view>
     </view>
   </view>
-  <view class="page {{overflowFlag==true?'active':''}}" style="position:absolute;">
+  <view class="page {{overflowFlag==true?'active':''}}">
     <view class="P1" style="margin-top:230rpx">
       <block a:if="{{flag1 || flag2 }}">
         <view style="height:552rpx;"  a:if="{{flag1 || flag2}}">
@@ -48,7 +49,7 @@
           </view> -->
           <view class="new_title" >{{item.channel_name}}</view>
           
-          <view class="map_view" catchTap="openMap" data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}">
+          <view class="map_view" catchTap="openMap" data-channelname="{{item.channel_name}}" data-latitude="{{item.latitude}}" data-longitude="{{item.longitude}}" data-site_description="{{item.site_description}}">
             <view class="map_view_title"><text style="color:#0072FF;" a:if="{{hiddenFlag==false}}">{{item.distance}}</text> |  {{item.site_description}}</view>
             <view class="icon_view_4_new" >
               <image class="icon_24" src="../../images/icon_0701_24.png"></image>
@@ -98,3 +99,4 @@
 
     </view>
   </view>
+</view>

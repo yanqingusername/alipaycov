@@ -725,28 +725,23 @@ _Page({
       box.showToast('用户服务协议不存在，请联系客服')
       return;
     }
-    wx.downloadFile({
+    _my.downloadFile({
       url: report_temp, //要预览的PDF的地址
-      filePath: wx.env.USER_DATA_PATH + '/用户服务协议.pdf',
-      success: function (res) {
-        console.log(res);
-        if (res.statusCode === 200) { //成功
-          var Path = res.filePath //返回的文件临时地址，用于后面打开本地预览所用
-          console.log(Path);
-          wx.openDocument({
-            filePath: Path,
-            showMenu: false,
-            success: function (res) {
-              console.log('打开用户服务协议成功');
-            }
-          })
-        }
+      // filePath: my.env.USER_DATA_PATH + '/预约须知.pdf',
+      success({ apFilePath }) {
+        _my.openDocument({
+          filePath: apFilePath,
+          fileType: "pdf",
+          success: res => {
+            console.log("打开用户服务协议成功");
+          }
+        });
       },
-      fail: function (res) {
-        box.showToast('用户服务协议不存在，请联系客服')
+      fail: res => {
+        box.showToast("用户服务协议不存在，请联系客服");
         console.log(res); //失败
       }
-    })
+    });
   }, 2000),
   bindPrivacyPolicy: utils.throttle(function (e) {
     var report_temp = this.data.yszz_url
@@ -754,28 +749,23 @@ _Page({
       box.showToast('隐私政策不存在，请联系客服')
       return;
     }
-    wx.downloadFile({
+    _my.downloadFile({
       url: report_temp, //要预览的PDF的地址
-      filePath: wx.env.USER_DATA_PATH + '/隐私政策.pdf',
-      success: function (res) {
-        console.log(res);
-        if (res.statusCode === 200) { //成功
-          var Path = res.filePath //返回的文件临时地址，用于后面打开本地预览所用
-
-          wx.openDocument({
-            filePath: Path,
-            showMenu: false,
-            success: function (res) {
-              console.log('打开用户服务协议成功');
-            }
-          })
-        }
+      // filePath: my.env.USER_DATA_PATH + '/隐私政策.pdf',
+      success({ apFilePath }) {
+        _my.openDocument({
+          filePath: apFilePath,
+          fileType: "pdf",
+          success: res => {
+            console.log("打开用户服务协议成功");
+          }
+        });
       },
-      fail: function (res) {
-        box.showToast('隐私政策不存在，请联系客服')
+      fail: res => {
+        box.showToast("隐私政策不存在，请联系客服");
         console.log(res); //失败
       }
-    })
+    });
   }, 2000),
   getbaseData: function () {
     let that = this;
