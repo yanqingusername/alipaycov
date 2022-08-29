@@ -195,7 +195,7 @@ _Page({
           isbigscreen: that.data.isbigscreen,
           yingye: that.data.yingye,
         };
-        request.request_get("/newalipay/getFixedSamplingPoint1.hn", data, function(res) {
+        request.request_get("/newalipay/getAllFixedSamplingPoint1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {
@@ -325,7 +325,7 @@ _Page({
           isbigscreen: that.data.isbigscreen,
           yingye: that.data.yingye,
         };
-        request.request_get("/newalipay/getFixedSamplingPoint1.hn", data, function(res) {
+        request.request_get("/newalipay/getAllFixedSamplingPoint1.hn", data, function(res) {
 
           if (res) {
             if (res.success) {

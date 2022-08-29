@@ -71,12 +71,12 @@
           
           <!-- <image class="icon_1_new" style="margin-right:10rpx;" src="../../images/icon_position_06.png"></image> -->
           <view class="type_view">
-            <view class="map_view_type" style="width: 100%;padding: 12rpx 30rpx;margin-top: 20rpx;" a:if="{{item.is_big_screen == 1}}">
+            <view class="{{item.tag_text.length > 0 ? 'map_view_type3':'map_view_type1'}}" a:if="{{item.is_big_screen == 1}}">
               <view class="map_3_view_title">{{item.screen_text}}</view>
               <view style="color: #0870FF;font-size: 24rpx;padding-top:4rpx;margin-left:10rpx;">{{item.big_screen_text}}</view>
             </view>
 
-            <view class="map_view_type" style="padding: 12rpx 14rpx 12rpx 30rpx;width: 100%;margin-top:20rpx;" a:for="{{item.paytypetexts}}" a:for-index="typeIndex" a:for-item="typeItem" data-name="{{item.channel_name}}"  data-distance="{{item.distance}}" data-id="{{item.channel_id}}" data-typeid="{{typeItem.id}}" catchTap="bindCheckSamplingPoint">
+            <view class="{{item.tag_text.length > 0 ? 'map_view_type4':'map_view_type2'}}" a:for="{{item.paytypetexts}}" a:for-index="typeIndex" a:for-item="typeItem" data-name="{{item.channel_name}}"  data-distance="{{item.distance}}" data-id="{{item.channel_id}}" data-typeid="{{typeItem.id}}" catchTap="bindCheckSamplingPoint">
               <view class="map_3_view_title">{{typeItem.paytype_text}}</view>
               <view class="icon_view_3_new" >马上预约</view>
             </view>
