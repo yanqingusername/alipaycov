@@ -674,7 +674,7 @@ _Page({
 
   chooseDistrict: function() {
     _my.navigateTo({
-      url: "/pages/chooseSamplingPoint/chooseDistrict"
+      url: "/pages/chooseSamplingPoint/chooseDistrict?bigscreen=2"
     });
   },
   openMap: function(e) {

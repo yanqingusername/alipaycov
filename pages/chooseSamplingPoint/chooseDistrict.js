@@ -11,7 +11,8 @@ _Page({
    * Page initial data
    */
   data: {
-    arr: []
+    arr: [],
+    is_big_screen: 1 // 1--常态化检测  2--不是常态化检测
   },
 
   /**
@@ -19,12 +20,17 @@ _Page({
    */
   onLoad: function(options) {
     var that = this;
+    this.setData({
+      is_big_screen: options.bigscreen || 1
+    });
     that.getChannelDistrict();
   },
 
   getChannelDistrict() {
     var that = this;
-    var data = {};
+    var data = {
+      is_big_screen: this.data.is_big_screen
+    };
     request.request_get("/newalipay/getCountSamplingPoint.hn", data, function(res) {
       console.log("getChannelDistrict", res);
 
