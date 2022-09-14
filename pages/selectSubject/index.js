@@ -33,7 +33,7 @@ _Page({
     let data = {
       open_id: openid
     }
-    request.request_get('/a/getAllSubject.hn', data, function (res) {
+    request.request_get('/newalipay/getAllSubject.hn', data, function (res) {
       console.info('回调', res)
       if (res) {
         if (res.success) {

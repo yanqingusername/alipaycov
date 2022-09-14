@@ -170,7 +170,7 @@ _Page({
     var data = {
       open_id: open_id
     };
-    request.request_get("/a/getTestRecords.hn", data, function (res) {
+    request.request_get("/newalipay/getTestRecords.hn", data, function (res) {
       console.info("回调", res);
 
       if (res) {

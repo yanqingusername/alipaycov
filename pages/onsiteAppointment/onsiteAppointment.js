@@ -1463,7 +1463,7 @@ _Page({
           box.showToast("网络不稳定，请重试");
         }
       })
-      // request.request_get("/a/addMeituanPaymentOrder.hn", data2, function(res) {
+      // request.request_get("/newalipay/addMeituanPaymentOrder.hn", data2, function(res) {
       //   console.info("支付回调", res);
 
       //   if (res) {
@@ -2456,7 +2456,7 @@ _Page({
     let data = {
       open_id: openid
     }
-    request.request_get('/a/getAllSubject.hn', data, function (res) {
+    request.request_get('/newalipay/getAllSubject.hn', data, function (res) {
       console.info('回调', res)
       if (res) {
         if (res.success) {

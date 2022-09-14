@@ -111,7 +111,7 @@ _Page({
     var open_id = app.globalData.openid;
     console.info(appointment_num, open_id);
     request.request_get(
-      "/a/getPersonTestDetails.hn",
+      "/newalipay/getPersonTestDetails.hn",
       {
         appointment_num: appointment_num,
         open_id: open_id
