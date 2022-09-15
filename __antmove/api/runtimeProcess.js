@@ -83,7 +83,7 @@ myApi.getUserInfoWrap = {
     fn: function (e = {}, fn) {
   
         globalVar.getAuthCode({
-            scopes: 'auth_user',
+            scopes: 'auth_base',
             success: () => {
                 globalVar.getAuthUserInfo({
                     success: function (userInfo) {
