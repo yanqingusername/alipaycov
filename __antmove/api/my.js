@@ -785,7 +785,7 @@ const apiObj = {startBeaconDiscovery:{fn: function fn (obj = {}) {
             return my.openCardList(params);
         },},login:{fn: function fn (obj = {}) {
             my.getAuthCode({
-                scopes: 'auth_user',
+                scopes: 'auth_base',
                 success: res => {
                     const resObj = {
                         code: res.authCode
@@ -1218,7 +1218,7 @@ const apiObj = {startBeaconDiscovery:{fn: function fn (obj = {}) {
             }
 
             my.getAuthCode({
-                scopes: 'auth_user',
+                scopes: 'auth_base',
                 success: () => {
                     my.getAuthUserInfo({
                         ...obj,
